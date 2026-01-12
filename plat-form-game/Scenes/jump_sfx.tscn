@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://ssg5iebsp1bc"]
+
+[ext_resource type="AudioStream" uid="uid://boyvj61mtvxxa" path="res://assets/sounds/jump.wav" id="1_fmh6r"]
+
+[node name="JumpSFX" type="AudioStreamPlayer2D"]
+stream = ExtResource("1_fmh6r")
+bus = &"SFX"

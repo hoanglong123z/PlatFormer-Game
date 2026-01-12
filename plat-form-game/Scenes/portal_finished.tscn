@@ -1,0 +1,117 @@
+[gd_scene load_steps=14 format=3 uid="uid://cw8pq13sq3116"]
+
+[ext_resource type="Script" uid="uid://bj05uokx0ty4b" path="res://script/portal_finished.gd" id="1_rfmqv"]
+[ext_resource type="Texture2D" uid="uid://cxgqo6ereaco8" path="res://assets/sprites/PORTAL BLUE-Sheet.png" id="1_s6h5h"]
+[ext_resource type="FontFile" uid="uid://boqt1mnajh71l" path="res://assets/fonts/04B_30__.TTF" id="2_rfmqv"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rfmqv"]
+atlas = ExtResource("1_s6h5h")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5flv4"]
+atlas = ExtResource("1_s6h5h")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ro72m"]
+atlas = ExtResource("1_s6h5h")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0rdvv"]
+atlas = ExtResource("1_s6h5h")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3atid"]
+atlas = ExtResource("1_s6h5h")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mjesi"]
+atlas = ExtResource("1_s6h5h")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dux8e"]
+atlas = ExtResource("1_s6h5h")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cwwqq"]
+atlas = ExtResource("1_s6h5h")
+region = Rect2(448, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nnklk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rfmqv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5flv4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ro72m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0rdvv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3atid")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mjesi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dux8e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cwwqq")
+}],
+"loop": true,
+"name": &"default",
+"speed": 8.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_px2pf"]
+radius = 15.0
+height = 72.0
+
+[node name="PortalFinished" type="Node2D"]
+script = ExtResource("1_rfmqv")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -9.536743e-07)
+scale = Vector2(1.125, 1.4843749)
+sprite_frames = SubResource("SpriteFrames_nnklk")
+autoplay = "default"
+frame_progress = 0.6411722
+flip_h = true
+
+[node name="Area2D" type="Area2D" parent="."]
+visibility_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+visibility_layer = 2
+position = Vector2(4, 1)
+shape = SubResource("CapsuleShape2D_px2pf")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -521.5
+offset_top = -20.0
+offset_right = 521.5
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 6
+theme_override_constants/shadow_offset_y = 6
+theme_override_fonts/font = ExtResource("2_rfmqv")
+theme_override_font_sizes/font_size = 32
+text = "Congratulations on crossing Grass Island!"
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

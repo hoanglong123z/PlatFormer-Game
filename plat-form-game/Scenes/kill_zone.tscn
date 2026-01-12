@@ -1,0 +1,64 @@
+[gd_scene load_steps=4 format=3 uid="uid://dfbvlm4t6fxp7"]
+
+[ext_resource type="Script" uid="uid://c6goy8qneanq8" path="res://script/kill_zone.gd" id="1_d6013"]
+[ext_resource type="AudioStream" uid="uid://bw44n2bubwtis" path="res://assets/sounds/hurt.wav" id="2_byrjq"]
+[ext_resource type="FontFile" uid="uid://boqt1mnajh71l" path="res://assets/fonts/04B_30__.TTF" id="3_1qu4h"]
+
+[node name="KillZone" type="Area2D"]
+collision_mask = 2
+script = ExtResource("1_d6013")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.6
+one_shot = true
+
+[node name="DiedSFX" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_byrjq")
+bus = &"SFX"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="die" type="Label" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -248.5
+offset_top = -56.0
+offset_right = 248.5
+offset_bottom = 56.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 6
+theme_override_constants/shadow_offset_y = 6
+theme_override_fonts/font = ExtResource("3_1qu4h")
+theme_override_font_sizes/font_size = 52
+text = "You Died ☠️"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="gameover" type="Label" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -344.0
+offset_top = -26.5
+offset_right = 344.0
+offset_bottom = 26.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 6
+theme_override_constants/shadow_offset_y = 6
+theme_override_fonts/font = ExtResource("3_1qu4h")
+theme_override_font_sizes/font_size = 52
+text = "Game Over BRUHH"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

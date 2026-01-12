@@ -1,0 +1,107 @@
+[gd_scene load_steps=24 format=3 uid="uid://bkvltqlk6sm18"]
+
+[ext_resource type="Texture2D" uid="uid://cw10mhlw0qy7s" path="res://assets/Sprites [Enemies]/Brickhead/Brickhead_1/Idle_4/Idle_4_D.png" id="1_gvn4l"]
+[ext_resource type="Texture2D" uid="uid://wahj3m3pyfgr" path="res://assets/Sprites [Enemies]/Brickhead/Brickhead_1/Idle_4/Idle_4_DL.png" id="2_pewtu"]
+[ext_resource type="Texture2D" uid="uid://bfxnwx86eva1t" path="res://assets/Sprites [Enemies]/Brickhead/Brickhead_1/Idle_4/Idle_4_DR.png" id="3_7ux4p"]
+[ext_resource type="Texture2D" uid="uid://ddm0ordgncq8n" path="res://assets/Sprites [Enemies]/Brickhead/Brickhead_1/Idle_4/Idle_4_F.png" id="4_qu84x"]
+[ext_resource type="Texture2D" uid="uid://dfo0ww4ch0ppu" path="res://assets/Sprites [Enemies]/Brickhead/Brickhead_1/Idle_4/Idle_4_L.png" id="5_i73yo"]
+[ext_resource type="Texture2D" uid="uid://e65ha24g1al6" path="res://assets/Sprites [Enemies]/Brickhead/Brickhead_1/Idle_4/Idle_4_R.png" id="6_2jq30"]
+[ext_resource type="Texture2D" uid="uid://bwyypaxemjser" path="res://assets/Sprites [Enemies]/Brickhead/Brickhead_1/Idle_4/Idle_4_U.png" id="7_7pgb8"]
+[ext_resource type="Texture2D" uid="uid://bhs37jvw7ugf0" path="res://assets/Sprites [Enemies]/Brickhead/Brickhead_1/Idle_4/Idle_4_UL.png" id="8_47a3h"]
+[ext_resource type="Texture2D" uid="uid://iti40vwofomh" path="res://assets/Sprites [Enemies]/Brickhead/Brickhead_1/Idle_4/Idle_4_UR.png" id="9_dpac7"]
+[ext_resource type="Texture2D" uid="uid://oewuoxk2glww" path="res://assets/Sprites [Enemies]/Brickhead/Brickhead_1/Brickhead_1_2.png" id="10_7ux4p"]
+[ext_resource type="PackedScene" uid="uid://dfbvlm4t6fxp7" path="res://Scenes/kill_zone.tscn" id="10_pewtu"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vugmx"]
+atlas = ExtResource("1_gvn4l")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_urjnu"]
+atlas = ExtResource("2_pewtu")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3nqns"]
+atlas = ExtResource("3_7ux4p")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hyps8"]
+atlas = ExtResource("4_qu84x")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2mwtk"]
+atlas = ExtResource("5_i73yo")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1tgql"]
+atlas = ExtResource("6_2jq30")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gmolv"]
+atlas = ExtResource("7_7pgb8")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wcgls"]
+atlas = ExtResource("8_47a3h")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s81bv"]
+atlas = ExtResource("9_dpac7")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qu84x"]
+atlas = ExtResource("10_7ux4p")
+region = Rect2(96, 96, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_p6els"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vugmx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_urjnu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3nqns")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hyps8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2mwtk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1tgql")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gmolv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wcgls")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s81bv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qu84x")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 3.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gvn4l"]
+size = Vector2(30, 30)
+
+[node name="brickhead" type="Node2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_p6els")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.3717022
+
+[node name="KillZone" parent="." instance=ExtResource("10_pewtu")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KillZone"]
+shape = SubResource("RectangleShape2D_gvn4l")

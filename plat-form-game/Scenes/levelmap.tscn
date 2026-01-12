@@ -1,0 +1,189 @@
+[gd_scene load_steps=24 format=3 uid="uid://drnejy8u52n75"]
+
+[ext_resource type="Texture2D" uid="uid://d108jagtowpbq" path="res://assets/BackGround/3.jpg" id="1_8agjx"]
+[ext_resource type="Script" uid="uid://btgt1n3cmmyid" path="res://script/levelmap.gd" id="1_v3alb"]
+[ext_resource type="FontFile" uid="uid://boqt1mnajh71l" path="res://assets/fonts/04B_30__.TTF" id="2_ajsh8"]
+[ext_resource type="FontFile" uid="uid://dwsi3jm4or4jf" path="res://assets/fonts/PixelOperator8.ttf" id="3_kt3d4"]
+[ext_resource type="Texture2D" uid="uid://c55gw8a8vxgv0" path="res://assets/sprites/world_tileset.png" id="4_4b82k"]
+[ext_resource type="Texture2D" uid="uid://b52vt5h8rmx4l" path="res://assets/sprites/LavaTile set.png" id="5_0mra6"]
+[ext_resource type="Texture2D" uid="uid://mtpky1fhpjdx" path="res://assets/BackGround/Sprite sheet for Basic Pack.png" id="5_4b82k"]
+[ext_resource type="Script" uid="uid://b1puhgf7rlhif" path="res://script/lv_1.gd" id="5_yllln"]
+[ext_resource type="Script" uid="uid://duibme4m21cj2" path="res://script/lv_2.gd" id="7_w5u67"]
+[ext_resource type="Script" uid="uid://wici6brflftp" path="res://script/lv_3.gd" id="8_cd62m"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ajsh8"]
+texture = ExtResource("1_8agjx")
+modulate_color = Color(0.6052743, 0.6052743, 0.6052743, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0mra6"]
+texture = ExtResource("4_4b82k")
+region_rect = Rect2(0, 0, 16, 16)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kt3d4"]
+texture = ExtResource("4_4b82k")
+region_rect = Rect2(0, 0, 16, 16)
+modulate_color = Color(0.59313357, 0.5931336, 0.5931334, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kt3d4"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_w5u67"]
+texture = ExtResource("5_0mra6")
+region_rect = Rect2(128, 32, 32, 32)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cd62m"]
+texture = ExtResource("5_0mra6")
+region_rect = Rect2(128, 32, 32, 32)
+modulate_color = Color(0.601223, 0.601223, 0.6012228, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0mra6"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_73oau"]
+texture = ExtResource("4_4b82k")
+region_rect = Rect2(112, 0, 16, 16)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_f30em"]
+texture = ExtResource("4_4b82k")
+region_rect = Rect2(112, 0, 16, 16)
+modulate_color = Color(0.5489626, 0.5489626, 0.54896253, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v3alb"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_v3alb"]
+texture = ExtResource("5_4b82k")
+region_rect = Rect2(535, 181, 17, 21)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_yllln"]
+texture = ExtResource("5_4b82k")
+region_rect = Rect2(567, 183, 17, 19)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_w5u67"]
+
+[node name="levelmap" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1151.0
+offset_bottom = 651.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+script = ExtResource("1_v3alb")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_ajsh8")
+
+[node name="Lv1" type="Button" parent="."]
+layout_mode = 0
+offset_left = 107.0
+offset_top = 234.0
+offset_right = 219.0
+offset_bottom = 344.0
+theme_override_fonts/font = ExtResource("3_kt3d4")
+theme_override_font_sizes/font_size = 42
+theme_override_styles/normal = SubResource("StyleBoxTexture_0mra6")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_kt3d4")
+theme_override_styles/hover = SubResource("StyleBoxTexture_kt3d4")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_kt3d4")
+script = ExtResource("5_yllln")
+
+[node name="Lv2" type="Button" parent="."]
+layout_mode = 0
+offset_left = 518.0
+offset_top = 185.0
+offset_right = 630.0
+offset_bottom = 295.0
+theme_override_fonts/font = ExtResource("3_kt3d4")
+theme_override_font_sizes/font_size = 42
+theme_override_styles/normal = SubResource("StyleBoxTexture_w5u67")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_cd62m")
+theme_override_styles/hover = SubResource("StyleBoxTexture_cd62m")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_0mra6")
+script = ExtResource("7_w5u67")
+
+[node name="Lv3" type="Button" parent="."]
+layout_mode = 0
+offset_left = 927.0
+offset_top = 355.0
+offset_right = 1037.0
+offset_bottom = 464.0
+theme_override_fonts/font = ExtResource("3_kt3d4")
+theme_override_font_sizes/font_size = 42
+theme_override_styles/normal = SubResource("StyleBoxTexture_73oau")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_f30em")
+theme_override_styles/hover = SubResource("StyleBoxTexture_f30em")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_v3alb")
+script = ExtResource("8_cd62m")
+
+[node name="Back" type="Button" parent="."]
+layout_mode = 1
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 87.0
+offset_bottom = 82.0
+theme_override_styles/normal = SubResource("StyleBoxTexture_v3alb")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_yllln")
+theme_override_styles/hover = SubResource("StyleBoxTexture_yllln")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_w5u67")
+
+[node name="label" type="Node" parent="."]
+
+[node name="Label" type="Label" parent="label"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -98.0
+offset_top = 103.0
+offset_right = 116.0
+offset_bottom = 168.0
+grow_horizontal = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 6
+theme_override_constants/shadow_offset_y = 6
+theme_override_fonts/font = ExtResource("2_ajsh8")
+theme_override_font_sizes/font_size = 52
+text = "Level"
+
+[node name="lv1" type="Label" parent="label"]
+offset_left = 142.0
+offset_top = 271.0
+offset_right = 182.0
+offset_bottom = 314.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.9843137)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 5
+theme_override_fonts/font = ExtResource("3_kt3d4")
+theme_override_font_sizes/font_size = 42
+text = "1"
+
+[node name="lv2" type="Label" parent="label"]
+offset_left = 555.0
+offset_top = 223.0
+offset_right = 595.0
+offset_bottom = 266.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 5
+theme_override_fonts/font = ExtResource("3_kt3d4")
+theme_override_font_sizes/font_size = 42
+text = "2"
+
+[node name="lv3" type="Label" parent="label"]
+offset_left = 963.0
+offset_top = 397.0
+offset_right = 1003.0
+offset_bottom = 440.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 5
+theme_override_fonts/font = ExtResource("3_kt3d4")
+theme_override_font_sizes/font_size = 42
+text = "3"
+
+[connection signal="pressed" from="Lv1" to="." method="_on_lv_1_pressed"]
+[connection signal="pressed" from="Lv2" to="." method="_on_lv_2_pressed"]
+[connection signal="pressed" from="Lv3" to="." method="_on_lv_3_pressed"]
+[connection signal="pressed" from="Back" to="." method="_on_back_pressed"]
