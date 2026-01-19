@@ -13,7 +13,7 @@ var can_dash = true
 var ghost_timer = 0.0
 var dash_timer = 0.0
 # -- ATTACK --#
-const ATTACK_COOLDOWN = 0.5
+const ATTACK_COOLDOWN = 1
 var damage = 1
 var is_attacking = false
 
@@ -22,7 +22,11 @@ var hearts_list : Array[TextureRect]
 var health = 3 
 
 var is_dying = false
+var is_hurt = false
 var can_take_damage = true
+var is_braking = false #phanh
+var is_tunring = false #quay đầu
+var last_direction = 0 #lưu biến cũ
 @onready var animated_sprite = $AnimatedSprite2D
 @onready var jump_sfx: AudioStreamPlayer2D = $JumpSFX
 @onready var attack_area: Area2D = $AttackArea
@@ -41,26 +45,60 @@ func _ready() -> void:
 	else:
 		global_position = GameManager.respawn_position
 		print("Game cũ! Hồi sinh tại checkpoint: ", GameManager.respawn_position)
-	
 	var hearts_parent = $heart_bar/HBoxContainer
 	for child in hearts_parent.get_children():
 		hearts_list.append(child)
-	print(hearts_list)
+		print(hearts_list)
+
 
 func take_damage(amount = 1) -> bool:
-	if is_dashing or not can_take_damage:
+	if is_dashing or not can_take_damage or is_dying:
 		print("Đang lướt - Bất tử!")
 		return false
-	if health > 0:
-		health -= amount
-		update_heart_display()
-		can_take_damage = false
-		get_tree().create_timer(1.0).timeout.connect(func(): can_take_damage = true)
-		return true
+	health -= amount
+	update_heart_display()
+	if health <= 0:
+		die()
+	else:
+		# Gọi hàm xử lý hiệu ứng (nhưng không await nó ở đây)
+		start_hurt_sequence()
+		
 	return true
+func start_hurt_sequence():
+	if is_hurt:
+		return
+	if is_attacking:
+		is_attacking = false
+	
+	
+	is_hurt = true
+	can_take_damage = false # Bất tử tạm thời
+	
+	animated_sprite.play("hurt")
+	print("Á đau quá!")
+	
+	# Chờ hết animation hurt (Ví dụ 0.4s)
+	await get_tree().create_timer(0.4).timeout
+	is_hurt = false # Trả lại quyền điều khiển
+	
+	# Chờ thêm xíu nữa mới hết bất tử (Ví dụ 0.6s)
+	await get_tree().create_timer(0.6).timeout
+	can_take_damage = true
+
+
+func die():
+	is_dying = true 
+	animated_sprite.play("died")
+	print("Hẹo rồi!")
+	await get_tree().create_timer(2.0).timeout
+	#get_tree().reload_current_scene()
+
+
+
 func update_heart_display():
 	for i in range(hearts_list.size()):
 		hearts_list[i].visible = i < health
+
 
 func _process(delta: float) -> void:
 	if dash_bar:
@@ -85,12 +123,24 @@ func _physics_process(delta: float) -> void:
 		return
 		
 	# Attack
-	if is_attacking:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-		velocity.y += get_gravity().y * delta
+	#if is_attacking:
+		#velocity.x = move_toward(velocity.x, 0, SPEED)
+		#velocity.y += get_gravity().y * delta
+		#move_and_slide()
+		#return
+	
+	if is_dying:
+		velocity.x = 0
+		velocity += get_gravity() * delta
 		move_and_slide()
 		return
-	# Add the gravity.
+
+	if is_hurt:
+		velocity.x = 0
+		velocity += get_gravity() * delta
+		move_and_slide()
+		return 
+	# Gravity
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 		
@@ -108,56 +158,50 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 		jump_sfx.play()
-
 	#get the input direction : -1 , 0 , 1
 	var direction := Input.get_axis("move_left", "move_right")
 	#flip the sprite
 	if direction > 0:
 		animated_sprite.flip_h = false
-		animated_sprite.position.x = 5
 		attack_area.scale.x = 1
 	elif direction < 0:
 		animated_sprite.flip_h = true
-		animated_sprite.position.x = -7
 		attack_area.scale.x = -1
+
 	#play animation
-	if is_on_floor():
-		if direction == 0:
-			animated_sprite.play("idle")
+	if not is_attacking:
+		if is_on_floor():
+			if direction == 0:
+				animated_sprite.play("idle")
+			else:
+				animated_sprite.play("run")
 		else:
-			animated_sprite.play("run")
-	else:
-		animated_sprite.play("jump")
-		
+			animated_sprite.play("jump")
 	if direction:
 		velocity.x = direction * SPEED
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
-	
 	move_and_slide()
 
 func perform_attack():
+	if is_attacking: 
+		return
 	is_attacking = true
-	
 	animated_sprite.play("Attack")
+	
 	await  get_tree().create_timer(0.1).timeout
 	var targets = []
 	targets.append_array(attack_area.get_overlapping_bodies())
 	targets.append_array(attack_area.get_overlapping_areas())
-	
 	for target in targets:
 		if target.has_method("take_damage"):
-			target.take_damage(damage)
+			target.take_damage(damage, global_position)
 			print("chém trúng: ", target.name)
 		elif target.get_parent().has_method("take_damage"):
-			target.get_parent().take_damage(damage)
+			target.get_parent().take_damage(damage, global_position)
 			print("Chém trúng (qua cha): ", target.get_parent().name)
-	#var bodies = attack_area.get_overlapping_bodies()
-	#for body in bodies:
-		#if body.has_method("take_damage"):
-			#body.take_damage(damage)
-			#print("Đã chém trúng: ", body.name)
-	await get_tree().create_timer(0.3).timeout
+	#await get_tree().create_timer(0.4).timeout
+	await animated_sprite.animation_finished
 	
 	is_attacking = false
 func start_dash():

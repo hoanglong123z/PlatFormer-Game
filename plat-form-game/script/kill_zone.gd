@@ -47,7 +47,7 @@ func _on_body_entered(body: Node2D) -> void:
 			tween.tween_interval(0.5)
 			tween.tween_property(gameover,"modulate:a", 0.0, 0.5)
 			tween.tween_callback(gameover.hide)
-			
+			timer.start(0.9)
 		timer.start()
 
 func _on_timer_timeout() -> void:

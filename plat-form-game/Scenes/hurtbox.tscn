@@ -3,9 +3,10 @@
 [ext_resource type="Script" uid="uid://c5qv3mt0bclde" path="res://script/hurtbox.gd" id="1_rnnan"]
 
 [node name="Hurtbox" type="Area2D"]
-collision_layer = 2
+collision_layer = 4
 collision_mask = 0
 monitoring = false
 script = ExtResource("1_rnnan")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -1.5)

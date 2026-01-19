@@ -1353,7 +1353,7 @@ autoplay = "new_animation"
 [node name="Enemys" type="Node" parent="."]
 
 [node name="Enemy2" parent="Enemys" instance=ExtResource("6_i6g32")]
-position = Vector2(120, 82)
+position = Vector2(120, 81)
 
 [node name="Enemy4" parent="Enemys" instance=ExtResource("6_i6g32")]
 position = Vector2(760, 113)
@@ -1401,7 +1401,7 @@ position = Vector2(-569, -512)
 position = Vector2(-329, -512)
 
 [node name="Slimered3" parent="Enemys" instance=ExtResource("16_nnt18")]
-position = Vector2(55, -527)
+position = Vector2(55, -528)
 
 [node name="Slimered4" parent="Enemys" instance=ExtResource("16_nnt18")]
 position = Vector2(359, -527)
@@ -1600,6 +1600,9 @@ position = Vector2(689, 4)
 
 [node name="StartPoint" type="Marker2D" parent="."]
 position = Vector2(-184, 151)
+
+[node name="Skeleton" parent="." instance=ExtResource("15_nb51f")]
+position = Vector2(-49, 127)
 
 [connection signal="pressed" from="HUD/Pausegame" to="GameManager" method="_on_pausegame_pressed"]
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cupqyvyyv1ru3"]
+[gd_scene load_steps=17 format=3 uid="uid://cupqyvyyv1ru3"]
 
 [ext_resource type="Texture2D" uid="uid://vgfxhqtrbjn5" path="res://assets/sprites/slime_green.png" id="1_1f0kj"]
 [ext_resource type="Script" uid="uid://dpdh8dqoxlslo" path="res://script/enemy.gd" id="1_afpow"]
@@ -37,6 +37,10 @@ region = Rect2(24, 0, 24, 24)
 atlas = ExtResource("1_1f0kj")
 region = Rect2(0, 0, 24, 24)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_56vhr"]
+atlas = ExtResource("1_1f0kj")
+region = Rect2(48, 54, 24, 18)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_auwsv"]
 animations = [{
 "frames": [{
@@ -69,8 +73,16 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_haro7")
 }],
-"loop": true,
+"loop": false,
 "name": &"die",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_56vhr")
+}],
+"loop": false,
+"name": &"hurt",
 "speed": 5.0
 }]
 
@@ -78,16 +90,16 @@ animations = [{
 size = Vector2(10, 15)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_287tu"]
-size = Vector2(12, 16)
+size = Vector2(14, 15)
 
 [node name="Enemy" type="Area2D"]
+z_index = 2
 collision_mask = 2
 script = ExtResource("1_afpow")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -12)
 sprite_frames = SubResource("SpriteFrames_auwsv")
-animation = &"die"
 autoplay = "default"
 
 [node name="KillZone" parent="." instance=ExtResource("2_afpow")]
@@ -108,7 +120,15 @@ target_position = Vector2(-11, 0)
 [node name="Hurtbox" parent="." instance=ExtResource("4_287tu")]
 
 [node name="CollisionShape2D" parent="Hurtbox" index="0"]
-position = Vector2(0, -8)
+position = Vector2(0, -7.5)
 shape = SubResource("RectangleShape2D_287tu")
+
+[node name="GroundRight" type="RayCast2D" parent="."]
+position = Vector2(5, 0)
+target_position = Vector2(0, 15)
+
+[node name="GroundLeft" type="RayCast2D" parent="."]
+position = Vector2(-5, 0)
+target_position = Vector2(0, 15)
 
 [editable path="Hurtbox"]

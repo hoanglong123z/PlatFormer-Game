@@ -1,8 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://dqqax0hnb1hh4"]
+[gd_scene load_steps=18 format=3 uid="uid://dqqax0hnb1hh4"]
 
 [ext_resource type="Script" uid="uid://gbegodtwkdb" path="res://script/slimered.gd" id="1_hmwjy"]
 [ext_resource type="Texture2D" uid="uid://b2s71fm3jt26g" path="res://assets/sprites/slime_purple.png" id="1_jvr65"]
 [ext_resource type="PackedScene" uid="uid://dfbvlm4t6fxp7" path="res://Scenes/kill_zone.tscn" id="2_3y75q"]
+[ext_resource type="PackedScene" uid="uid://cwm8i7d4vijt4" path="res://Scenes/hurtbox.tscn" id="4_fxuya"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3y75q"]
 atlas = ExtResource("1_jvr65")
@@ -23,6 +24,26 @@ region = Rect2(48, 48, 24, 24)
 [sub_resource type="AtlasTexture" id="AtlasTexture_idwn3"]
 atlas = ExtResource("1_jvr65")
 region = Rect2(72, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tff4v"]
+atlas = ExtResource("1_jvr65")
+region = Rect2(72, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vcg5v"]
+atlas = ExtResource("1_jvr65")
+region = Rect2(48, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_th3kc"]
+atlas = ExtResource("1_jvr65")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4ijlu"]
+atlas = ExtResource("1_jvr65")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wx65f"]
+atlas = ExtResource("1_jvr65")
+region = Rect2(48, 48, 24, 24)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_tff4v"]
 animations = [{
@@ -45,10 +66,38 @@ animations = [{
 "loop": true,
 "name": &"default",
 "speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tff4v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vcg5v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_th3kc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ijlu")
+}],
+"loop": true,
+"name": &"die",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wx65f")
+}],
+"loop": false,
+"name": &"hurt",
+"speed": 5.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hmwjy"]
 size = Vector2(10, 14)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fxuya"]
+size = Vector2(14, 18)
 
 [node name="Slimered" type="Area2D"]
 collision_mask = 2
@@ -57,8 +106,8 @@ script = ExtResource("1_hmwjy")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(1, -12)
 sprite_frames = SubResource("SpriteFrames_tff4v")
+animation = &"hurt"
 autoplay = "default"
-frame_progress = 0.9217098
 
 [node name="RayCastLeft" type="RayCast2D" parent="."]
 position = Vector2(1, -6)
@@ -73,3 +122,19 @@ target_position = Vector2(11, 0)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="KillZone"]
 position = Vector2(1, -7)
 shape = SubResource("RectangleShape2D_hmwjy")
+
+[node name="Hurtbox" parent="." instance=ExtResource("4_fxuya")]
+
+[node name="CollisionShape2D" parent="Hurtbox" index="0"]
+position = Vector2(1, -8)
+shape = SubResource("RectangleShape2D_fxuya")
+
+[node name="GroundRight" type="RayCast2D" parent="."]
+position = Vector2(7, 0)
+target_position = Vector2(0, 10)
+
+[node name="GroundLeft" type="RayCast2D" parent="."]
+position = Vector2(-5, 0)
+target_position = Vector2(0, 10)
+
+[editable path="Hurtbox"]
