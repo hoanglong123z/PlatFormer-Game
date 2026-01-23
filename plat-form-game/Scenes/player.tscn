@@ -1,4 +1,4 @@
-[gd_scene load_steps=91 format=3 uid="uid://qd064cyi64ad"]
+[gd_scene load_steps=90 format=3 uid="uid://qd064cyi64ad"]
 
 [ext_resource type="Script" uid="uid://d1sfbct2jif1c" path="res://script/player.gd" id="1_cvnsp"]
 [ext_resource type="Texture2D" uid="uid://b8twbi613t1hc" path="res://assets/Art/male_hero-combo_1.png" id="2_ukyrk"]
@@ -525,9 +525,6 @@ animations = [{
 radius = 6.0
 height = 20.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_ukyrk"]
-radius = 14.0
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_vfarp"]
 atlas = ExtResource("4_vgqql")
 region = Rect2(11, 0, 11, 11)
@@ -578,8 +575,9 @@ script = ExtResource("1_cvnsp")
 position = Vector2(-9.536743e-07, -8.999999)
 scale = Vector2(0.47750002, 0.5343751)
 sprite_frames = SubResource("SpriteFrames_x3wgy")
-animation = &"run"
+animation = &"idle"
 autoplay = "idle"
+frame_progress = 0.5289229
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -10)
@@ -590,10 +588,8 @@ shape = SubResource("CapsuleShape2D_6t5aa")
 [node name="AttackArea" type="Area2D" parent="."]
 collision_mask = 4
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
-position = Vector2(16, -12)
-shape = SubResource("CircleShape2D_ukyrk")
-debug_color = Color(0.9665188, 0.18422213, 0.03646501, 0.41960785)
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="AttackArea"]
+polygon = PackedVector2Array(7, -21, 12, -21, 14, -21, 16, -21, 18, -20, 19, -19, 20, -18, 22, -16, 24, -13, 25, -10, 24, -6, 22, -4, 21, -3, 19, -2, 20, -1, 19, 0, 14, 0, 14, -1, 10, -1, 9, -5, 11, -7, 12, -9, 12, -11, 13, -14, 10, -17, 7, -19, 6, -20)
 
 [node name="heart_bar" type="CanvasLayer" parent="."]
 

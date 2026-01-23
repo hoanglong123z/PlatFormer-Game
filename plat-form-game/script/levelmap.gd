@@ -24,8 +24,3 @@ func _on_lv_1_pressed() -> void:
 func _on_lv_2_pressed() -> void:
 	GameManager.reset_game_data()
 	get_tree().change_scene_to_file("res://Scenes/map_2.tscn")
-
-
-func _on_lv_3_pressed() -> void:
-	GameManager.reset_game_data()
-	pass

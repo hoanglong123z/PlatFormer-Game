@@ -14,6 +14,10 @@ var is_taking_damage = false
 @onready var ground_left: RayCast2D = $GroundLeft
 
 func _ready() -> void:
+	var my_id = str(get_path())
+	if GameManager.is_object_dead(my_id):
+		queue_free()
+		return
 	if not animated_sprite.animation_finished.is_connected(_on_animation_finished):
 		animated_sprite.animation_finished.connect(_on_animation_finished)
 	
@@ -81,7 +85,7 @@ func die():
 	is_dying = true
 	is_taking_damage = true
 	print("Tạch!")
-	
+	GameManager.register_death(str(get_path()))
 	if has_node("KillZone/CollisionShape2D"):
 		$KillZone/CollisionShape2D.set_deferred("disabled", true)
 	elif has_node("KillZone"):

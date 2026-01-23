@@ -13,10 +13,14 @@ var player_in_attack_range = false
 var can_attack = true              
 var attack_cooldown_time = 1.0
 @onready var animated_sprite_2d: AnimatedSprite2D = $Flipper/AnimatedSprite2D
-@onready var kill_zone_col: CollisionShape2D = $Flipper/KillZone/CollisionShape2D
+@onready var kill_zone_col: CollisionPolygon2D = $Flipper/KillZone/CollisionPolygon2D
 @onready var flipper: Node2D = $Flipper
 
 func _ready() -> void:
+	var my_id = str(get_path())
+	if GameManager.is_object_dead(my_id):
+		queue_free()
+		return
 	kill_zone_col.disabled = true
 	
 func _physics_process(delta: float) -> void:
@@ -57,7 +61,7 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 func take_damage(amount, source_pos = Vector2.ZERO):
-	if is_dying:
+	if is_dying or is_taking_damage:
 		return
 	health -= amount
 	print("Skeleton bị đánh! Máu còn : ", health)
@@ -66,7 +70,10 @@ func take_damage(amount, source_pos = Vector2.ZERO):
 		if is_attacking:
 			is_attacking = false
 			kill_zone_col.set_deferred("disabled", true)
-	
+			
+			var cooldown_fix = get_tree().create_timer(1.0) # Thời gian chờ hồi chiêu (1 giây)
+			cooldown_fix.timeout.connect(func(): can_attack = true)
+			
 		is_taking_damage = true
 		velocity = Vector2.ZERO
 		
@@ -97,6 +104,7 @@ func die():
 	
 	print("Skeleton Tạch!")
 	
+	GameManager.register_death(str(get_path()))
 	#$CollisionShape2D.set_deferred("disabled", true)
 	kill_zone_col.set_deferred("disabled", true)
 	
@@ -153,9 +161,9 @@ func attack():
 	await get_tree().create_timer(0.8).timeout
 	
 	# Check lại xem trong lúc chờ có bị đánh chết không
-	if is_dying or is_taking_damage:
+	if not is_attacking or is_dying or is_taking_damage:
 		kill_zone_col.set_deferred("disabled", true)
-		is_attacking = false
+		#is_attacking = false
 		return
 
 	# 4. BẬT SÁT THƯƠNG

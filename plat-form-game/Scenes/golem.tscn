@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://beyqflvgg1k0b"]
+
+[node name="Golem" type="CharacterBody2D"]

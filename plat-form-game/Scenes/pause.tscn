@@ -57,11 +57,11 @@ thickness = 6
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3fojq"]
 texture = ExtResource("1_o80xk")
-region_rect = Rect2(645, 100, 22, 24)
+region_rect = Rect2(837, 36, 22, 24)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nsogc"]
 texture = ExtResource("1_o80xk")
-region_rect = Rect2(677, 102, 22, 22)
+region_rect = Rect2(869, 38, 22, 22)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0pswh"]
 
@@ -337,3 +337,4 @@ libraries = {
 [connection signal="value_changed" from="popupMenu/VBoxContainer/MenuPause/NinePatchRect/Music" to="popupMenu/VBoxContainer/MenuPause/NinePatchRect/Music" method="_on_value_changed"]
 [connection signal="value_changed" from="popupMenu/VBoxContainer/MenuPause/NinePatchRect/SFX" to="popupMenu/VBoxContainer/MenuPause/NinePatchRect/SFX" method="_on_value_changed"]
 [connection signal="toggled" from="popupMenu/VBoxContainer/MenuPause/NinePatchRect/FullScreenControl" to="popupMenu/VBoxContainer/MenuPause/NinePatchRect/FullScreenControl" method="_on_toggled"]
+[connection signal="pressed" from="popupMenu/VBoxContainer/MenuPause/NinePatchRect/Button3" to="." method="_on_button_3_pressed"]

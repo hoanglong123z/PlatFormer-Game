@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://drnejy8u52n75"]
+[gd_scene load_steps=20 format=3 uid="uid://drnejy8u52n75"]
 
 [ext_resource type="Texture2D" uid="uid://d108jagtowpbq" path="res://assets/BackGround/3.jpg" id="1_8agjx"]
 [ext_resource type="Script" uid="uid://btgt1n3cmmyid" path="res://script/levelmap.gd" id="1_v3alb"]
@@ -9,7 +9,6 @@
 [ext_resource type="Texture2D" uid="uid://mtpky1fhpjdx" path="res://assets/BackGround/Sprite sheet for Basic Pack.png" id="5_4b82k"]
 [ext_resource type="Script" uid="uid://b1puhgf7rlhif" path="res://script/lv_1.gd" id="5_yllln"]
 [ext_resource type="Script" uid="uid://duibme4m21cj2" path="res://script/lv_2.gd" id="7_w5u67"]
-[ext_resource type="Script" uid="uid://wici6brflftp" path="res://script/lv_3.gd" id="8_cd62m"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ajsh8"]
 texture = ExtResource("1_8agjx")
@@ -36,17 +35,6 @@ region_rect = Rect2(128, 32, 32, 32)
 modulate_color = Color(0.601223, 0.601223, 0.6012228, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0mra6"]
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_73oau"]
-texture = ExtResource("4_4b82k")
-region_rect = Rect2(112, 0, 16, 16)
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_f30em"]
-texture = ExtResource("4_4b82k")
-region_rect = Rect2(112, 0, 16, 16)
-modulate_color = Color(0.5489626, 0.5489626, 0.54896253, 1)
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v3alb"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_v3alb"]
 texture = ExtResource("5_4b82k")
@@ -78,10 +66,10 @@ theme_override_styles/panel = SubResource("StyleBoxTexture_ajsh8")
 
 [node name="Lv1" type="Button" parent="."]
 layout_mode = 0
-offset_left = 107.0
-offset_top = 234.0
-offset_right = 219.0
-offset_bottom = 344.0
+offset_left = 215.0
+offset_top = 232.0
+offset_right = 327.0
+offset_bottom = 342.0
 theme_override_fonts/font = ExtResource("3_kt3d4")
 theme_override_font_sizes/font_size = 42
 theme_override_styles/normal = SubResource("StyleBoxTexture_0mra6")
@@ -92,10 +80,10 @@ script = ExtResource("5_yllln")
 
 [node name="Lv2" type="Button" parent="."]
 layout_mode = 0
-offset_left = 518.0
-offset_top = 185.0
-offset_right = 630.0
-offset_bottom = 295.0
+offset_left = 822.0
+offset_top = 233.0
+offset_right = 934.0
+offset_bottom = 343.0
 theme_override_fonts/font = ExtResource("3_kt3d4")
 theme_override_font_sizes/font_size = 42
 theme_override_styles/normal = SubResource("StyleBoxTexture_w5u67")
@@ -103,20 +91,6 @@ theme_override_styles/pressed = SubResource("StyleBoxTexture_cd62m")
 theme_override_styles/hover = SubResource("StyleBoxTexture_cd62m")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_0mra6")
 script = ExtResource("7_w5u67")
-
-[node name="Lv3" type="Button" parent="."]
-layout_mode = 0
-offset_left = 927.0
-offset_top = 355.0
-offset_right = 1037.0
-offset_bottom = 464.0
-theme_override_fonts/font = ExtResource("3_kt3d4")
-theme_override_font_sizes/font_size = 42
-theme_override_styles/normal = SubResource("StyleBoxTexture_73oau")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_f30em")
-theme_override_styles/hover = SubResource("StyleBoxTexture_f30em")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_v3alb")
-script = ExtResource("8_cd62m")
 
 [node name="Back" type="Button" parent="."]
 layout_mode = 1
@@ -148,10 +122,10 @@ theme_override_font_sizes/font_size = 52
 text = "Level"
 
 [node name="lv1" type="Label" parent="label"]
-offset_left = 142.0
-offset_top = 271.0
-offset_right = 182.0
-offset_bottom = 314.0
+offset_left = 250.0
+offset_top = 269.0
+offset_right = 290.0
+offset_bottom = 312.0
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.9843137)
 theme_override_constants/shadow_offset_x = 3
 theme_override_constants/shadow_offset_y = 5
@@ -160,10 +134,10 @@ theme_override_font_sizes/font_size = 42
 text = "1"
 
 [node name="lv2" type="Label" parent="label"]
-offset_left = 555.0
-offset_top = 223.0
-offset_right = 595.0
-offset_bottom = 266.0
+offset_left = 859.0
+offset_top = 271.0
+offset_right = 899.0
+offset_bottom = 314.0
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 3
 theme_override_constants/shadow_offset_y = 5
@@ -171,19 +145,6 @@ theme_override_fonts/font = ExtResource("3_kt3d4")
 theme_override_font_sizes/font_size = 42
 text = "2"
 
-[node name="lv3" type="Label" parent="label"]
-offset_left = 963.0
-offset_top = 397.0
-offset_right = 1003.0
-offset_bottom = 440.0
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/shadow_offset_x = 3
-theme_override_constants/shadow_offset_y = 5
-theme_override_fonts/font = ExtResource("3_kt3d4")
-theme_override_font_sizes/font_size = 42
-text = "3"
-
 [connection signal="pressed" from="Lv1" to="." method="_on_lv_1_pressed"]
 [connection signal="pressed" from="Lv2" to="." method="_on_lv_2_pressed"]
-[connection signal="pressed" from="Lv3" to="." method="_on_lv_3_pressed"]
 [connection signal="pressed" from="Back" to="." method="_on_back_pressed"]

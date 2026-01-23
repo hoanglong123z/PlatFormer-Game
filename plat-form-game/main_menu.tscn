@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://xcietj43l3ci"]
+[gd_scene load_steps=34 format=3 uid="uid://xcietj43l3ci"]
 
 [ext_resource type="Script" uid="uid://dccjywd0wui8t" path="res://script/main_menu.gd" id="1_fu7sn"]
 [ext_resource type="FontFile" uid="uid://boqt1mnajh71l" path="res://assets/fonts/04B_30__.TTF" id="2_7vrkn"]
@@ -29,6 +29,16 @@ texture = ExtResource("4_qe12f")
 region_rect = Rect2(259, 180, 90, 25)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7vrkn"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mg3m2"]
+texture = ExtResource("4_qe12f")
+region_rect = Rect2(163, 178, 90, 27)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ojb7r"]
+texture = ExtResource("4_qe12f")
+region_rect = Rect2(259, 180, 90, 25)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_e5qqf"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dy7ct"]
 texture = ExtResource("4_qe12f")
@@ -172,10 +182,10 @@ anchor_bottom = 0.5
 offset_left = -229.0
 offset_top = -90.0
 offset_right = 238.0
-offset_bottom = 192.0
+offset_bottom = 210.95496
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 12
+theme_override_constants/separation = 5
 
 [node name="Button" type="Button" parent="MainButtons"]
 layout_mode = 2
@@ -190,7 +200,22 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_qe12f")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_8qtwp")
 theme_override_styles/hover = SubResource("StyleBoxTexture_8qtwp")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_7vrkn")
-text = "Start Game"
+text = "New Game"
+
+[node name="Button4" type="Button" parent="MainButtons"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_7vrkn")
+theme_override_font_sizes/font_size = 42
+theme_override_styles/normal = SubResource("StyleBoxTexture_mg3m2")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_ojb7r")
+theme_override_styles/hover = SubResource("StyleBoxTexture_ojb7r")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_e5qqf")
+text = "Continue"
 
 [node name="Button2" type="Button" parent="MainButtons"]
 layout_mode = 2
@@ -243,6 +268,7 @@ vertical_alignment = 1
 autowrap_trim_flags = 128
 
 [node name="Options" type="Panel" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -387,6 +413,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [connection signal="pressed" from="MainButtons/Button" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="MainButtons/Button4" to="." method="_on_continue_pressed"]
 [connection signal="pressed" from="MainButtons/Button2" to="." method="_on_option_pressed"]
 [connection signal="pressed" from="MainButtons/Button3" to="." method="_on_exit_pressed"]
 [connection signal="pressed" from="Options/NinePatchRect/Button4" to="." method="_on_back_options_pressed"]

@@ -15,6 +15,10 @@ var is_taking_damage = false
 
 
 func _ready() -> void:
+	var my_id = str(get_path())
+	if GameManager.is_object_dead(my_id):
+		queue_free()
+		return
 	animated_sprite.play("Run")
 
 
@@ -45,11 +49,7 @@ func take_damage(amount, source_pos = Vector2.ZERO):
 	if health > 0:
 		is_taking_damage = true # Khóa di chuyển
 		
-		# === 1. HIỆU ỨNG NHÁY ĐỎ (FLASH RED) ===
-		var flash_tween = create_tween()
-		animated_sprite.modulate = Color(10, 0, 0) # Chớp màu đỏ rực
-		# Trở về màu bình thường trong 0.2 giây
-		flash_tween.tween_property(animated_sprite, "modulate", Color(1, 1, 1), 0.2)
+		animated_sprite.play("hurt")
 		
 		var push_dir = -direction 
 		if source_pos != Vector2.ZERO:
@@ -78,12 +78,11 @@ func take_damage(amount, source_pos = Vector2.ZERO):
 		var knockback_tween = create_tween()
 		
 		if is_safe:
-			var target_pos = position.x + (push_dir * 25)
+			var target_pos = position.x + (push_dir * 20)
 			knockback_tween.tween_property(self, "position:x", target_pos, 0.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-		else:
-			print("Kẹt Tường/Vực -> Đứng im chịu trận!")
-			knockback_tween.tween_interval(0.2)
-		knockback_tween.tween_callback(func(): is_taking_damage = false)
+		await animated_sprite.animation_finished
+		is_taking_damage = false
+		animated_sprite.play("Run")
 		
 	else:
 		die()
@@ -92,13 +91,14 @@ func die():
 	is_dying = true
 	is_taking_damage = true
 	print("Quái Tạch!")
-	
+	GameManager.register_death(str(get_path()))
 	# Xóa KillZone nếu có
 	if has_node("KillZone"):
 		$KillZone.queue_free()
 		
-	# Không có animation die, nên cho dừng khoảng 0.5s cho người chơi nhận ra là nó chết
-	await get_tree().create_timer(0.3).timeout
+	animated_sprite.play("die")
+	
+	await  animated_sprite.animation_finished
 	
 	# Hiệu ứng mờ dần rồi biến mất
 	var tween = create_tween()

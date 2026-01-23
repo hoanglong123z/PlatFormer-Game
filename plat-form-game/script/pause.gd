@@ -34,3 +34,9 @@ func _on_back_game_pressed() -> void:
 	
 func _process(delta: float) -> void:
 	testEsc()
+
+
+func _on_button_3_pressed() -> void:
+	GameManager.save_game()
+	# Có thể thêm hiệu ứng thông báo "Đã lưu" nếu thích
+	print("Đã bấm nút Sao -> Game Saved!")

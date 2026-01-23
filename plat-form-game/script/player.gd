@@ -7,14 +7,14 @@ const JUMP_VELOCITY = -250.0
 # -- DASH --#
 const DASH_SPEED = 200.0
 const DASH_TIME = 0.3
-const DASH_COOLDOWN = 1.0
+const DASH_COOLDOWN = 3.6
 var is_dashing = false    
 var can_dash = true
 var ghost_timer = 0.0
 var dash_timer = 0.0
 # -- ATTACK --#
-const ATTACK_COOLDOWN = 1
-var damage = 1
+const ATTACK_COOLDOWN = 1.0
+var damage = 1.0
 var is_attacking = false
 
 # -- Heart --#
@@ -33,23 +33,27 @@ var last_direction = 0 #lưu biến cũ
 @onready var dash_bar: TextureProgressBar = $heart_bar/DashBar
 
 func _ready() -> void:
-	if GameManager.respawn_position == Vector2.ZERO:
+	if GameManager.has_loaded_data():
+		global_position = GameManager.get_loaded_position()
+		health = GameManager.get_loaded_health() # <--- LẤY MÁU TỪ FILE SAVE
+		GameManager.clear_loaded_data() # Xóa dữ liệu tạm sau khi lấy xong
+		
+		GameManager.respawn_position = global_position
+		print("Player đã load game! Máu: ", health)
+		
+	elif GameManager.respawn_position != Vector2.ZERO:
+		global_position = GameManager.respawn_position
+		print("Hồi sinh tại Checkpoint cũ: ", GameManager.respawn_position)
+	else:
 		var start_point = get_parent().get_node_or_null("StartPoint")
 		if start_point:
 			global_position = start_point.global_position
 			GameManager.respawn_position = global_position
-			CheckPoint.last_position = null
-			print("Game mới! Đã cưỡng chế về StartPoint: ", global_position)
-		else:
-			print("LỖI: Quên chưa tạo StartPoint trong Map rồi bro ơi!")
-	else:
-		global_position = GameManager.respawn_position
-		print("Game cũ! Hồi sinh tại checkpoint: ", GameManager.respawn_position)
 	var hearts_parent = $heart_bar/HBoxContainer
 	for child in hearts_parent.get_children():
 		hearts_list.append(child)
 		print(hearts_list)
-
+	update_heart_display()
 
 func take_damage(amount = 1) -> bool:
 	if is_dashing or not can_take_damage or is_dying:
