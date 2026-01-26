@@ -308,7 +308,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"Attack",
-"speed": 10.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -577,7 +577,6 @@ scale = Vector2(0.47750002, 0.5343751)
 sprite_frames = SubResource("SpriteFrames_x3wgy")
 animation = &"idle"
 autoplay = "idle"
-frame_progress = 0.5289229
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -10)

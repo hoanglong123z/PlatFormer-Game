@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bwd8pubycl1k"
-path="res://.godot/imported/Character_sheet.png-4003e7f97d0e584a35f69143becbcfa3.ctex"
+uid="uid://4havpmcenpkv"
+path="res://.godot/imported/tilesetgrass.png-58c66b18e89c88fd4860e5c46528eed6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/monster/Character_sheet.png"
-dest_files=["res://.godot/imported/Character_sheet.png-4003e7f97d0e584a35f69143becbcfa3.ctex"]
+source_file="res://assets/sprites/tilesetgrass.png"
+dest_files=["res://.godot/imported/tilesetgrass.png-58c66b18e89c88fd4860e5c46528eed6.ctex"]
 
 [params]
 

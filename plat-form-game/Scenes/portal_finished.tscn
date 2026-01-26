@@ -100,10 +100,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -521.5
-offset_top = -20.0
-offset_right = 521.5
-offset_bottom = 20.0
+offset_left = -424.0
+offset_top = -45.5
+offset_right = 424.0
+offset_bottom = 45.5
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
@@ -112,6 +112,26 @@ theme_override_constants/shadow_offset_x = 6
 theme_override_constants/shadow_offset_y = 6
 theme_override_fonts/font = ExtResource("2_rfmqv")
 theme_override_font_sizes/font_size = 32
-text = "Congratulations on crossing Grass Island!"
+text = "Chúc Mừng bạn chiến thắng màn chơi 
+        và mở khoá level 2"
+
+[node name="Label2" type="Label" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -148.0
+offset_top = -11.5
+offset_right = 148.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 6
+theme_override_constants/shadow_offset_y = 6
+theme_override_fonts/font = ExtResource("2_rfmqv")
+theme_override_font_sizes/font_size = 32
+text = "Chưa Đạt Điều Kiện Nhặt đủ 100 Coins"
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

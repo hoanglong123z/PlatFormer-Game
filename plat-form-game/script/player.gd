@@ -64,16 +64,16 @@ func take_damage(amount = 1) -> bool:
 	if health <= 0:
 		die()
 	else:
-		# Gọi hàm xử lý hiệu ứng (nhưng không await nó ở đây)
+		# Gọi hàm xử lý hiệu ứng
 		start_hurt_sequence()
-		
 	return true
 func start_hurt_sequence():
 	if is_hurt:
 		return
 	if is_attacking:
 		is_attacking = false
-	
+	if is_dashing:
+		is_dashing = false
 	
 	is_hurt = true
 	can_take_damage = false # Bất tử tạm thời
@@ -81,21 +81,26 @@ func start_hurt_sequence():
 	animated_sprite.play("hurt")
 	print("Á đau quá!")
 	
-	# Chờ hết animation hurt (Ví dụ 0.4s)
+	# Chờ hết animation hurt 
 	await get_tree().create_timer(0.4).timeout
 	is_hurt = false # Trả lại quyền điều khiển
 	
-	# Chờ thêm xíu nữa mới hết bất tử (Ví dụ 0.6s)
+	if not is_dying:
+		animated_sprite.play("idle")
+	# Chờ thêm xíu nữa mới hết bất tử 
 	await get_tree().create_timer(0.6).timeout
 	can_take_damage = true
-
+func kill_instant():
+	health = 0 
+	update_heart_display()
+	die()
 
 func die():
 	is_dying = true 
 	animated_sprite.play("died")
 	print("Hẹo rồi!")
 	await get_tree().create_timer(2.0).timeout
-	#get_tree().reload_current_scene()
+	get_tree().reload_current_scene()
 
 
 

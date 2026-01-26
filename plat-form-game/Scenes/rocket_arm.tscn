@@ -1,0 +1,73 @@
+[gd_scene load_steps=11 format=3 uid="uid://btkhbksujyyge"]
+
+[ext_resource type="Texture2D" uid="uid://cjmq5md27tfhc" path="res://assets/monster/Boss Golem/arm_projectile_glowing.png" id="1_8ot7v"]
+[ext_resource type="Script" uid="uid://i0n58nhmm2n2" path="res://script/rocket_arm.gd" id="1_o2xb0"]
+[ext_resource type="PackedScene" uid="uid://dfbvlm4t6fxp7" path="res://Scenes/kill_zone.tscn" id="3_celbc"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o2xb0"]
+atlas = ExtResource("1_8ot7v")
+region = Rect2(50, 25, 50, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_celbc"]
+atlas = ExtResource("1_8ot7v")
+region = Rect2(150, 25, 50, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_henig"]
+atlas = ExtResource("1_8ot7v")
+region = Rect2(250, 25, 50, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ovlwh"]
+atlas = ExtResource("1_8ot7v")
+region = Rect2(50, 125, 50, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jx85i"]
+atlas = ExtResource("1_8ot7v")
+region = Rect2(150, 125, 50, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1qf48"]
+atlas = ExtResource("1_8ot7v")
+region = Rect2(250, 125, 50, 25)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mtl70"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o2xb0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_celbc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_henig")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ovlwh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jx85i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1qf48")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 5.0
+}]
+
+[node name="RocketArm" type="Area2D"]
+collision_layer = 0
+script = ExtResource("1_o2xb0")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_mtl70")
+animation = &"fly"
+frame_progress = 0.23939365
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[node name="KillZone" parent="." instance=ExtResource("3_celbc")]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="KillZone"]
+polygon = PackedVector2Array(-17, -2, -13, -6, -7, -8, 3, -8, 8, -11, 12, -13, 14, -10, 20, -7, 25, -3, 29, 0, 24, 4, 21, 6, 14, 9, 11, 13, 3, 10, -4, 8, -12, 5, -19, 2, -22, -1)
+
+[connection signal="body_entered" from="KillZone" to="." method="_on_kill_zone_body_entered"]

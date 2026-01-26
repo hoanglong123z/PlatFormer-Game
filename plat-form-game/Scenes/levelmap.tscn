@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://drnejy8u52n75"]
+[gd_scene load_steps=23 format=3 uid="uid://drnejy8u52n75"]
 
 [ext_resource type="Texture2D" uid="uid://d108jagtowpbq" path="res://assets/BackGround/3.jpg" id="1_8agjx"]
 [ext_resource type="Script" uid="uid://btgt1n3cmmyid" path="res://script/levelmap.gd" id="1_v3alb"]
@@ -8,7 +8,10 @@
 [ext_resource type="Texture2D" uid="uid://b52vt5h8rmx4l" path="res://assets/sprites/LavaTile set.png" id="5_0mra6"]
 [ext_resource type="Texture2D" uid="uid://mtpky1fhpjdx" path="res://assets/BackGround/Sprite sheet for Basic Pack.png" id="5_4b82k"]
 [ext_resource type="Script" uid="uid://b1puhgf7rlhif" path="res://script/lv_1.gd" id="5_yllln"]
+[ext_resource type="Texture2D" uid="uid://bqndo72odral" path="res://assets/sprites/Dungeon Tile Set.png" id="6_cd62m"]
 [ext_resource type="Script" uid="uid://duibme4m21cj2" path="res://script/lv_2.gd" id="7_w5u67"]
+[ext_resource type="Texture2D" uid="uid://bvskf85inmje2" path="res://assets/sprites/grass.png" id="11_f30em"]
+[ext_resource type="Texture2D" uid="uid://bn6lkncnqcl0p" path="res://assets/sprites/tree.png" id="12_r4mya"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ajsh8"]
 texture = ExtResource("1_8agjx")
@@ -26,8 +29,8 @@ modulate_color = Color(0.59313357, 0.5931336, 0.5931334, 1)
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kt3d4"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_w5u67"]
-texture = ExtResource("5_0mra6")
-region_rect = Rect2(128, 32, 32, 32)
+texture = ExtResource("6_cd62m")
+region_rect = Rect2(134, 79, 20, 21)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cd62m"]
 texture = ExtResource("5_0mra6")
@@ -78,6 +81,38 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_kt3d4")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_kt3d4")
 script = ExtResource("5_yllln")
 
+[node name="Grass" type="Sprite2D" parent="Lv1"]
+position = Vector2(29, -22)
+scale = Vector2(2.25, 1.90625)
+texture = ExtResource("11_f30em")
+
+[node name="Tree" type="Sprite2D" parent="Lv1"]
+position = Vector2(104, 60)
+texture = ExtResource("12_r4mya")
+region_enabled = true
+region_rect = Rect2(5, 0, 86, 96)
+
+[node name="Tree2" type="Sprite2D" parent="Lv1"]
+position = Vector2(1, 75)
+texture = ExtResource("12_r4mya")
+region_enabled = true
+region_rect = Rect2(108, 23, 65, 73)
+
+[node name="Grass2" type="Sprite2D" parent="Lv1"]
+position = Vector2(54, -21.5)
+scale = Vector2(2.34375, 1.9062501)
+texture = ExtResource("11_f30em")
+
+[node name="Grass3" type="Sprite2D" parent="Lv1"]
+position = Vector2(76, -17.000015)
+scale = Vector2(1.78125, 1.65625)
+texture = ExtResource("11_f30em")
+
+[node name="Grass4" type="Sprite2D" parent="Lv1"]
+position = Vector2(89, -25.75)
+scale = Vector2(1.6249995, 2.2031248)
+texture = ExtResource("11_f30em")
+
 [node name="Lv2" type="Button" parent="."]
 layout_mode = 0
 offset_left = 822.0
@@ -91,6 +126,40 @@ theme_override_styles/pressed = SubResource("StyleBoxTexture_cd62m")
 theme_override_styles/hover = SubResource("StyleBoxTexture_cd62m")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_0mra6")
 script = ExtResource("7_w5u67")
+
+[node name="DungeonTileSet" type="Sprite2D" parent="Lv2"]
+position = Vector2(-8, 102.00003)
+scale = Vector2(1.8749962, 1.9423064)
+texture = ExtResource("6_cd62m")
+region_enabled = true
+region_rect = Rect2(192, 147, 16, 13)
+
+[node name="DungeonTileSet2" type="Sprite2D" parent="Lv2"]
+position = Vector2(0, 31.00003)
+scale = Vector2(1.8157895, 1.875)
+texture = ExtResource("6_cd62m")
+region_enabled = true
+region_rect = Rect2(126, 192, 19, 32)
+
+[node name="DungeonTileSet3" type="Sprite2D" parent="Lv2"]
+position = Vector2(101, 105.5)
+scale = Vector2(1.7187502, 1.4999982)
+texture = ExtResource("6_cd62m")
+region_enabled = true
+region_rect = Rect2(72, 218, 32, 6)
+
+[node name="DungeonTileSet4" type="Sprite2D" parent="Lv2"]
+position = Vector2(40, 102)
+texture = ExtResource("6_cd62m")
+region_enabled = true
+region_rect = Rect2(162, 240, 44, 16)
+
+[node name="DungeonTileSet5" type="Sprite2D" parent="Lv2"]
+position = Vector2(86, 10.000015)
+scale = Vector2(1.4333336, 1.3125)
+texture = ExtResource("6_cd62m")
+region_enabled = true
+region_rect = Rect2(68, 192, 38, 15)
 
 [node name="Back" type="Button" parent="."]
 layout_mode = 1
@@ -134,9 +203,9 @@ theme_override_font_sizes/font_size = 42
 text = "1"
 
 [node name="lv2" type="Label" parent="label"]
-offset_left = 859.0
+offset_left = 857.0
 offset_top = 271.0
-offset_right = 899.0
+offset_right = 897.0
 offset_bottom = 314.0
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 3

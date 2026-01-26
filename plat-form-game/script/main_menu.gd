@@ -13,9 +13,7 @@ func _ready() -> void:
 		continue_btn.visible = false
 
 func _on_start_pressed() -> void:
-	GameManager.delete_save() 
-
-	if has_node("/root/CheckPoint"): 
+	if has_node("/root/CheckPoint"):
 		CheckPoint.last_position = null
 	
 	get_tree().change_scene_to_file("res://Scenes/levelmap.tscn")

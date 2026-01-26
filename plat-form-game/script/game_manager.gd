@@ -2,6 +2,8 @@ extends Node
 
 const SAVE_PATH = "user://savegame.save"
 
+var highest_unlocked_level = 1
+var golem_defeated = false
 # --- DỮ LIỆU GAME ---
 var score = 0
 var dead_objects = [] # Danh sách ID của Coin/Quái đã chết và ĐÃ ĐƯỢC LƯU
@@ -40,11 +42,14 @@ func save_game():
 		"scene": get_tree().current_scene.scene_file_path,
 		"position": respawn_position,
 		"health": player.health,
-		"dead_objects": dead_objects # Lưu danh sách đã chết xuống ổ cứng
+		"dead_objects": dead_objects,
+		"highest_unlocked_level": highest_unlocked_level,
+		"golem_defeated": golem_defeated
 	}
 	file.store_var(data)
 	print(">>> GAME SAVED! Vị trí: ", respawn_position)
 	print(">>> Đã lưu ", dead_objects.size(), " vật thể đã chết.")
+	print(">>> GAME SAVED! Level mở khóa cao nhất: ", highest_unlocked_level)
 
 func load_game():
 	if not FileAccess.file_exists(SAVE_PATH):
@@ -57,12 +62,14 @@ func load_game():
 	# Việc này đảm bảo những vật thể "chưa kịp save" sẽ được hồi sinh
 	dead_objects = data.get("dead_objects", [])
 	score = data.get("score", 0)
+	highest_unlocked_level = data.get("highest_unlocked_level", 1)
+	golem_defeated = data.get("golem_defeated", false)
 	player_data = data # Lưu tạm để Player dùng khi _ready
 	
 	# Chuyển cảnh
 	get_tree().paused = false # Bỏ pause nếu đang pause
 	get_tree().change_scene_to_file(data["scene"])
-	print(">>> LOAD GAME THÀNH CÔNG!")
+	print(">>> LOAD GAME! Level mở khóa: ", highest_unlocked_level)
 
 func has_save_file() -> bool:
 	return FileAccess.file_exists(SAVE_PATH)
@@ -83,7 +90,13 @@ func add_point():
 	if score_label:
 		score_label.text = str(score)
 	score_updated.emit()
-		
+
+func unlock_level(level_index):
+	if level_index > highest_unlocked_level:
+		highest_unlocked_level = level_index
+		print("Chúc mừng! Đã mở khoá level ", level_index)
+		save_game()
+
 func _on_pausegame_pressed() -> void:
 	if get_tree().paused:
 		pause.resume()
@@ -95,8 +108,10 @@ func _on_pausegame_pressed() -> void:
 func reset_game_data():
 	print("--- ĐANG RESET DỮ LIỆU ---")
 	score = 0 
+	dead_objects = []
 	respawn_position = start_position
 	CheckPoint.last_position = null
+	golem_defeated = false
 
 
 func has_loaded_data() -> bool: return not player_data.is_empty()

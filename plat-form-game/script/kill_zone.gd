@@ -2,14 +2,10 @@ extends Area2D
 
 @onready var timer = $Timer
 @onready var died_sfx: AudioStreamPlayer2D = $DiedSFX
-@onready var die: Label = $CanvasLayer/die
 @onready var gameover: Label = $CanvasLayer/gameover
 
 
 func _ready() -> void:
-	if die:
-		die.modulate.a = 0
-		die.hide()
 	if gameover:
 		gameover.modulate.a = 0
 		gameover.hide()
@@ -32,15 +28,7 @@ func _on_body_entered(body: Node2D) -> void:
 			Engine.time_scale = 0.5
 			body.set_physics_process(false)
 		#body.get_node("CollisionShape2D").queue_free()
-		if body.health >= 1:
-			die.show()
-			var tween = create_tween()
-			tween.tween_property(die, "modulate:a", 1.0, 0.5)
-			tween.tween_interval(0.5)
-			tween.tween_property(die,"modulate:a", 0.0, 0.5)
-			tween.tween_callback(die.hide)
-			body.set_physics_process(false)
-		elif body.health <= 0:
+		if body.health <= 0:
 			gameover.show()
 			var tween = create_tween()
 			tween.tween_property(gameover, "modulate:a", 1.0, 0.5)
@@ -59,10 +47,3 @@ func _on_timer_timeout() -> void:
 		if player.health <= 0:
 			GameManager.reset_game_data()
 			get_tree().reload_current_scene()
-		else:
-			player.global_position = GameManager.respawn_position
-			
-			player.velocity = Vector2.ZERO
-			
-			player.set_physics_process(true)
-			
