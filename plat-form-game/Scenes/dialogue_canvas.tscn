@@ -1,0 +1,46 @@
+[gd_scene load_steps=3 format=3 uid="uid://cpgpegwjm32m6"]
+
+[ext_resource type="Script" uid="uid://d4njhape2l2j6" path="res://script/dialogue_canvas.gd" id="1_2vfhh"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2vfhh"]
+bg_color = Color(0, 0, 0, 0.7490196)
+border_width_left = 6
+border_width_top = 6
+border_width_right = 6
+border_width_bottom = 6
+corner_radius_top_left = 35
+corner_radius_top_right = 35
+corner_radius_bottom_right = 35
+corner_radius_bottom_left = 35
+
+[node name="DialogueCanvas" type="CanvasLayer"]
+script = ExtResource("1_2vfhh")
+
+[node name="Panel" type="Panel" parent="."]
+z_index = -2
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -220.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_2vfhh")
+
+[node name="Portrait" type="TextureRect" parent="Panel"]
+layout_mode = 0
+offset_left = 949.04
+offset_top = -95.0
+offset_right = 1149.0404
+offset_bottom = 105.0
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Content" type="RichTextLabel" parent="Panel"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 21.0
+offset_right = 946.0
+offset_bottom = 199.5
+theme_override_font_sizes/normal_font_size = 30

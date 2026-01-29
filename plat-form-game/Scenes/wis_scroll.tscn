@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://ctd7hmdpeprgo"]
+
+[ext_resource type="Texture2D" uid="uid://lh718g5hwpy8" path="res://assets/sprites/#1 - Transparent Icons.png" id="1_15hni"]
+[ext_resource type="Script" uid="uid://6ilkf538xawg" path="res://script/wis_scroll.gd" id="1_hvvva"]
+[ext_resource type="PackedScene" uid="uid://dxab6ms6rdvi7" path="res://Scenes/story_screen.tscn" id="2_j3kx4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_15hni"]
+size = Vector2(26, 25)
+
+[node name="WisScroll" type="Area2D"]
+collision_mask = 2
+script = ExtResource("1_hvvva")
+story_scene = ExtResource("2_j3kx4")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -13)
+texture = ExtResource("1_15hni")
+region_enabled = true
+region_rect = Rect2(323, 419, 26, 25)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -13)
+shape = SubResource("RectangleShape2D_15hni")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

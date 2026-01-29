@@ -261,3 +261,22 @@ func spawn_ghost_trail(delta):
 		var tween = create_tween()
 		tween.tween_property(ghost, "modulate:a", 0.0, 0.3)
 		tween.tween_callback(ghost.queue_free)
+
+func heal(amount):
+	health += amount
+	if health > 3:
+		health = 3
+	update_heart_display()
+	print("Đã hồi máu! Máu hiện tại: ", health)
+func boots_damage(bonus_dmg, duration):
+	damage += bonus_dmg
+	print("Sức mạng tăng cường! Damage: ", damage)
+	
+	var default_color = modulate
+	modulate = Color(1, 0.5, 0.5) 
+	
+	await get_tree().create_timer(duration).timeout
+	
+	damage -= bonus_dmg
+	modulate = default_color
+	print("Hết Tác dụng Thuốc! Damage về: ", damage)

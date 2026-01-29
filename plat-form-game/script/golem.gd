@@ -12,6 +12,7 @@ extends CharacterBody2D
 var direction = 1 
 var player = null 
 var can_attack = true
+var is_aiming_laser = false
 
 enum {IDLE, CHASE, ATTACK_ARM, ATTACK_LASER, DIE, STUN}
 var state = IDLE
@@ -20,7 +21,12 @@ var state = IDLE
 @onready var sprite = $AnimatedSprite2D
 @onready var muzzle_arm = $MuzzleArm
 @onready var muzzle_laser = $MuzzleLaser
-@onready var raycast = $RayCast2D # Nhớ bật Enabled trong Inspector nhé!
+@onready var raycast = $RayCast2D 
+@onready var warning_line: Line2D = $MuzzleLaser/WarningLine
+
+@export_category("Drop Items")
+@export var WisScroll_item_scene: PackedScene
+@export var drop_chance = 1
 
 func _ready():
 	if GameManager.is_object_dead(str(get_path())):
@@ -38,11 +44,13 @@ func _physics_process(delta):
 	if player:
 		# Lấy vị trí chân + dịch lên ngực
 		var target_pos = player.global_position + aim_offset
-		
 		# Chuyển đổi sang toạ độ local để RayCast hiểu
 		raycast.target_position = to_local(target_pos)
 		raycast.force_raycast_update()
-
+		
+		if is_aiming_laser and warning_line:
+			warning_line.look_at(target_pos)
+			
 	match state:
 		IDLE:
 			velocity.x = 0
@@ -130,8 +138,18 @@ func perform_laser_attack():
 	velocity.x = 0
 	if sprite.sprite_frames.has_animation("laser"): sprite.play("laser")
 	
+	is_aiming_laser = true
+	if warning_line:
+		warning_line.show()
+		var tween = create_tween()
+		warning_line.width = 5
+		tween.tween_property(warning_line, "width", 1.0, 0.5)
+		
 	await get_tree().create_timer(0.5).timeout
 	
+	is_aiming_laser = false
+	if warning_line:
+		warning_line.hide()
 	if laser_scene and player:
 		var laser = laser_scene.instantiate()
 		muzzle_laser.add_child(laser)
@@ -160,7 +178,7 @@ func take_damage(amount, source_pos = Vector2.ZERO):
 	else:
 		# 4. GỌI HÀM STUN
 		apply_stun()
-
+	
 func apply_stun():
 	state = STUN
 	velocity.x = 0
@@ -171,16 +189,32 @@ func apply_stun():
 		else:
 			state = IDLE
 func die():
-	GameManager.golem_defeated = true 
-	GameManager.save_game()
-	if has_node("KillZone"): $KillZone.queue_free()
-	GameManager.register_death(str(get_path()))
-	if sprite.sprite_frames.has_animation("die"): await sprite.animation_finished
-	else: await get_tree().create_timer(1.0).timeout
-	queue_free()
+	if state == DIE: return
 	state = DIE
 	velocity.x = 0
-	sprite.play("die")
+	
+	GameManager.golem_defeated = true 
+	GameManager.save_game()
+	GameManager.register_death(str(get_path()))
+	
+	if has_node("KillZone"): $KillZone.queue_free()
+	
+	if sprite.sprite_frames.has_animation("die"):
+		sprite.play("die") 
+		await sprite.animation_finished
+	else:
+		await get_tree().create_timer(1.0).timeout
+	
+	spawn_item()
+	
+	queue_free()
+func spawn_item():
+	var item_scene = WisScroll_item_scene
+	if item_scene:
+		var item = item_scene.instantiate()
+		item.global_position = global_position
+		get_parent().call_deferred("add_child", item)
+
 
 func _on_player_detection_body_entered(body):
 	if body.is_in_group("Player"):

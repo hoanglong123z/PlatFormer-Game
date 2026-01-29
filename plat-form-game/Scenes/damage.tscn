@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://cw1i3gecomf5f"]
+
+[ext_resource type="Texture2D" uid="uid://m02vjscm4v35" path="res://assets/sprites/flasks_3_1.png" id="1_l45ke"]
+[ext_resource type="Script" uid="uid://ol4lsl5ywxx" path="res://script/damage.gd" id="1_wy1no"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_00l48"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_l45ke")
+}],
+"loop": true,
+"name": &"boost_damage",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_nymdy"]
+radius = 7.0
+height = 14.0
+
+[node name="damage" type="Area2D"]
+collision_mask = 2
+script = ExtResource("1_wy1no")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -5)
+sprite_frames = SubResource("SpriteFrames_00l48")
+animation = &"boost_damage"
+frame_progress = 0.550756
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -7)
+shape = SubResource("CapsuleShape2D_nymdy")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

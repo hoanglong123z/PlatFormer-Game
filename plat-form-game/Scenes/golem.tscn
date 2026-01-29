@@ -1,10 +1,11 @@
-[gd_scene load_steps=37 format=3 uid="uid://beyqflvgg1k0b"]
+[gd_scene load_steps=38 format=3 uid="uid://beyqflvgg1k0b"]
 
 [ext_resource type="Script" uid="uid://43dn0ghp6mq5" path="res://script/golem.gd" id="1_bs7yq"]
 [ext_resource type="PackedScene" uid="uid://btkhbksujyyge" path="res://Scenes/rocket_arm.tscn" id="2_3yf8f"]
 [ext_resource type="Texture2D" uid="uid://bwd8pubycl1k" path="res://assets/monster/Boss Golem/Character_sheet.png" id="2_568nj"]
 [ext_resource type="PackedScene" uid="uid://dfbvlm4t6fxp7" path="res://Scenes/kill_zone.tscn" id="3_lqe5q"]
 [ext_resource type="PackedScene" uid="uid://cxuuei3u3t5w7" path="res://Scenes/laser_beam.tscn" id="3_tspt6"]
+[ext_resource type="PackedScene" uid="uid://ctd7hmdpeprgo" path="res://Scenes/wis_scroll.tscn" id="4_tspt6"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lqe5q"]
 atlas = ExtResource("2_568nj")
@@ -237,10 +238,11 @@ collision_layer = 4
 script = ExtResource("1_bs7yq")
 rocket_scene = ExtResource("2_3yf8f")
 laser_scene = ExtResource("3_tspt6")
+WisScroll_item_scene = ExtResource("4_tspt6")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_u6v8k")
-animation = &"walk"
+animation = &"idle"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -269,6 +271,12 @@ position = Vector2(35, -13)
 
 [node name="MuzzleLaser" type="Marker2D" parent="."]
 position = Vector2(2, -17)
+
+[node name="WarningLine" type="Line2D" parent="MuzzleLaser"]
+visible = false
+points = PackedVector2Array(0, 0, 250, 0)
+width = 2.0
+default_color = Color(1, 1, 1, 0.5882353)
 
 [connection signal="body_entered" from="PlayerDetection" to="." method="_on_player_detection_body_entered"]
 [connection signal="body_exited" from="PlayerDetection" to="." method="_on_player_detection_body_exited"]

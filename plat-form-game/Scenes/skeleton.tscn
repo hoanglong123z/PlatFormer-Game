@@ -1,8 +1,10 @@
-[gd_scene load_steps=79 format=3 uid="uid://dkwppr0q5chdh"]
+[gd_scene load_steps=81 format=3 uid="uid://dkwppr0q5chdh"]
 
 [ext_resource type="Texture2D" uid="uid://dibc87bycqq1t" path="res://assets/sprites/Skeleton Attack.png" id="1_81u3t"]
 [ext_resource type="Script" uid="uid://cjw0xxp1m4jke" path="res://script/skeleton.gd" id="1_vd5x3"]
+[ext_resource type="PackedScene" uid="uid://vci7wc4aopf" path="res://Scenes/potion.tscn" id="2_q1wii"]
 [ext_resource type="Texture2D" uid="uid://cnnqj1es03xtr" path="res://assets/sprites/Skeleton Walk.png" id="2_vd5x3"]
+[ext_resource type="PackedScene" uid="uid://cw1i3gecomf5f" path="res://Scenes/damage.tscn" id="3_lw4xn"]
 [ext_resource type="PackedScene" uid="uid://dfbvlm4t6fxp7" path="res://Scenes/kill_zone.tscn" id="3_vd5x3"]
 [ext_resource type="Texture2D" uid="uid://tekxcbifj1w7" path="res://assets/Art/Skeleton Dead.png" id="4_ks230"]
 [ext_resource type="Texture2D" uid="uid://dhw3ptf8a6sw4" path="res://assets/sprites/Skeleton Idle.png" id="4_pegji"]
@@ -507,6 +509,8 @@ size = Vector2(30, 30.5)
 [node name="Skeleton" type="CharacterBody2D"]
 collision_layer = 4
 script = ExtResource("1_vd5x3")
+health_item_scene = ExtResource("2_q1wii")
+damage_item_scene = ExtResource("3_lw4xn")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 z_index = 1

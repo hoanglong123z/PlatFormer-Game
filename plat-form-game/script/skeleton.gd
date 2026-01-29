@@ -16,6 +16,10 @@ var attack_cooldown_time = 1.0
 @onready var kill_zone_col: CollisionPolygon2D = $Flipper/KillZone/CollisionPolygon2D
 @onready var flipper: Node2D = $Flipper
 
+@export_category("Drop Items")
+@export var health_item_scene: PackedScene
+@export var damage_item_scene: PackedScene
+@export var drop_chance = 0.5
 func _ready() -> void:
 	var my_id = str(get_path())
 	if GameManager.is_object_dead(my_id):
@@ -116,6 +120,25 @@ func die():
 	tween.tween_property(self, "modulate:a", 0.0, 0.5)
 	tween.tween_callback(queue_free)
 	
+	spawn_item()
+
+func spawn_item():
+	if randf() > drop_chance:
+		return
+	
+	var item_scene = null
+	var gacha = randf()
+	
+	if gacha < 0.6:
+		item_scene = health_item_scene
+	else:
+		item_scene = damage_item_scene
+	
+	if item_scene:
+		var item = item_scene.instantiate()
+		item.global_position = global_position
+		get_parent().call_deferred("add_child", item)
+
 func _on_detection_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Player"):
 		player = body

@@ -1,8 +1,10 @@
-[gd_scene load_steps=18 format=3 uid="uid://dqqax0hnb1hh4"]
+[gd_scene load_steps=20 format=3 uid="uid://dqqax0hnb1hh4"]
 
 [ext_resource type="Script" uid="uid://gbegodtwkdb" path="res://script/slimered.gd" id="1_hmwjy"]
 [ext_resource type="Texture2D" uid="uid://b2s71fm3jt26g" path="res://assets/sprites/slime_purple.png" id="1_jvr65"]
 [ext_resource type="PackedScene" uid="uid://dfbvlm4t6fxp7" path="res://Scenes/kill_zone.tscn" id="2_3y75q"]
+[ext_resource type="PackedScene" uid="uid://vci7wc4aopf" path="res://Scenes/potion.tscn" id="2_idwn3"]
+[ext_resource type="PackedScene" uid="uid://cw1i3gecomf5f" path="res://Scenes/damage.tscn" id="3_tff4v"]
 [ext_resource type="PackedScene" uid="uid://cwm8i7d4vijt4" path="res://Scenes/hurtbox.tscn" id="4_fxuya"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3y75q"]
@@ -100,8 +102,11 @@ size = Vector2(10, 14)
 size = Vector2(14, 18)
 
 [node name="Slimered" type="Area2D"]
+z_index = 2
 collision_mask = 2
 script = ExtResource("1_hmwjy")
+health_item_scene = ExtResource("2_idwn3")
+damage_item_scene = ExtResource("3_tff4v")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(1, -12)

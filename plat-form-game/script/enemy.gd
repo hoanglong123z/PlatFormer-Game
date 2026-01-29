@@ -13,6 +13,11 @@ var is_taking_damage = false
 @onready var ground_right: RayCast2D = $GroundRight
 @onready var ground_left: RayCast2D = $GroundLeft
 
+@export_category("Drop Items")
+@export var health_item_scene: PackedScene
+@export var damage_item_scene: PackedScene
+@export var drop_chance = 0.5
+
 func _ready() -> void:
 	var my_id = str(get_path())
 	if GameManager.is_object_dead(my_id):
@@ -81,6 +86,7 @@ func take_damage(amount, source_pos = Vector2.ZERO):
 		knockback_tween.tween_callback(func(): is_taking_damage = false)
 	else:
 		die()
+
 func die():
 	is_dying = true
 	is_taking_damage = true
@@ -97,9 +103,27 @@ func die():
 	var tween = create_tween()
 	tween.tween_property(self, "modulate:a", 0.0, 0.5)
 	tween.tween_callback(queue_free)
+	
+	spawn_item()
+
+func spawn_item():
+	if randf() > drop_chance:
+		return
+	
+	var item_scene = null
+	var gacha = randf()
+	
+	if gacha < 0.6:
+		item_scene = health_item_scene
+	else:
+		item_scene = damage_item_scene
+	
+	if item_scene:
+		var item = item_scene.instantiate()
+		item.global_position = global_position
+		get_parent().call_deferred("add_child", item)
 
 func _on_animation_finished():
-
 	if animated_sprite.animation == "hurt":
 		is_taking_damage = false
 		animated_sprite.play("default")

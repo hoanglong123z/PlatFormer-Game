@@ -1,8 +1,10 @@
-[gd_scene load_steps=17 format=3 uid="uid://cupqyvyyv1ru3"]
+[gd_scene load_steps=19 format=3 uid="uid://cupqyvyyv1ru3"]
 
 [ext_resource type="Texture2D" uid="uid://vgfxhqtrbjn5" path="res://assets/sprites/slime_green.png" id="1_1f0kj"]
 [ext_resource type="Script" uid="uid://dpdh8dqoxlslo" path="res://script/enemy.gd" id="1_afpow"]
+[ext_resource type="PackedScene" uid="uid://vci7wc4aopf" path="res://Scenes/potion.tscn" id="2_0830c"]
 [ext_resource type="PackedScene" uid="uid://dfbvlm4t6fxp7" path="res://Scenes/kill_zone.tscn" id="2_afpow"]
+[ext_resource type="PackedScene" uid="uid://cw1i3gecomf5f" path="res://Scenes/damage.tscn" id="3_ghaa6"]
 [ext_resource type="PackedScene" uid="uid://cwm8i7d4vijt4" path="res://Scenes/hurtbox.tscn" id="4_287tu"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_287tu"]
@@ -96,6 +98,8 @@ size = Vector2(14, 15)
 z_index = 2
 collision_mask = 2
 script = ExtResource("1_afpow")
+health_item_scene = ExtResource("2_0830c")
+damage_item_scene = ExtResource("3_ghaa6")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -12)
