@@ -1,4 +1,4 @@
-[gd_scene load_steps=76 format=3 uid="uid://dm865ckl7va5e"]
+[gd_scene load_steps=77 format=3 uid="uid://dm865ckl7va5e"]
 
 [ext_resource type="PackedScene" uid="uid://qd064cyi64ad" path="res://Scenes/player.tscn" id="1_ebmjs"]
 [ext_resource type="Script" uid="uid://ch5ef6umuhyfa" path="res://script/map1.gd" id="1_exi56"]
@@ -27,6 +27,7 @@
 [ext_resource type="PackedScene" uid="uid://cw385kndjvn47" path="res://Scenes/check_point.tscn" id="21_exi56"]
 [ext_resource type="PackedScene" uid="uid://beyqflvgg1k0b" path="res://Scenes/golem.tscn" id="23_mg4q0"]
 [ext_resource type="PackedScene" uid="uid://dfcjxk8qq31vg" path="res://Scenes/npc.tscn" id="27_81klo"]
+[ext_resource type="PackedScene" uid="uid://bcx8q37frc6sf" path="res://Scenes/chest.tscn" id="28_tgy6u"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wrm1d"]
 texture = ExtResource("2_qxrlw")
@@ -1493,6 +1494,19 @@ position = Vector2(10098, -87)
 
 [node name="Coin160" parent="Coins" instance=ExtResource("4_3dryh")]
 position = Vector2(10110, -87)
+
+[node name="Chest" parent="Coins" instance=ExtResource("28_tgy6u")]
+position = Vector2(1449, -598)
+
+[node name="Chest2" parent="Coins" instance=ExtResource("28_tgy6u")]
+position = Vector2(-744, -520)
+scale = Vector2(1.35, 1.35)
+
+[node name="Chest3" parent="Coins" instance=ExtResource("28_tgy6u")]
+position = Vector2(12014, -767)
+
+[node name="Chest4" parent="Coins" instance=ExtResource("28_tgy6u")]
+position = Vector2(11016, -55)
 
 [node name="Platforms" type="Node" parent="."]
 
