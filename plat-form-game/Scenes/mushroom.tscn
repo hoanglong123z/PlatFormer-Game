@@ -200,7 +200,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"die",
-"speed": 15.0
+"speed": 12.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -242,7 +242,7 @@ drop_chance = 1.0
 position = Vector2(0, -15)
 scale = Vector2(0.490625, 0.46874997)
 sprite_frames = SubResource("SpriteFrames_krudx")
-animation = &"Run"
+animation = &"die"
 autoplay = "Run"
 
 [node name="KillZone" parent="." instance=ExtResource("2_e0au5")]

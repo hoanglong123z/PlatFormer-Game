@@ -27,6 +27,13 @@ var can_take_damage = true
 var is_braking = false #phanh
 var is_tunring = false #quay đầu
 var last_direction = 0 #lưu biến cũ
+
+#buff timer
+var current_bonus_damage = 0
+@onready var buff_timer: Timer = $BuffTimer
+@onready var buff_label: Label = $heart_bar/Panel/BuffLabel
+@onready var panel: Panel = $heart_bar/Panel
+
 @onready var animated_sprite = $AnimatedSprite2D
 @onready var jump_sfx: AudioStreamPlayer2D = $JumpSFX
 @onready var attack_area: Area2D = $AttackArea
@@ -54,7 +61,9 @@ func _ready() -> void:
 		hearts_list.append(child)
 		print(hearts_list)
 	update_heart_display()
-
+	
+	if panel:
+		panel.hide()
 func take_damage(amount = 1) -> bool:
 	if is_dashing or not can_take_damage or is_dying:
 		print("Đang lướt - Bất tử!")
@@ -122,7 +131,16 @@ func _process(delta: float) -> void:
 			can_dash = true
 			dash_timer = 0
 			print("Dash Đã Hồi")
-
+	
+	if not buff_timer.is_stopped():
+		var time_left = int(buff_timer.time_left)
+		if panel:
+			panel.show()
+		if buff_label:
+			buff_label.text = "Buff Damage: %ds" % time_left
+	else:
+		if panel:
+			panel.hide()
 
 func _physics_process(delta: float) -> void:
 	# Dash
@@ -191,7 +209,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 	move_and_slide()
-
+	
 func perform_attack():
 	if is_attacking: 
 		return
@@ -268,15 +286,31 @@ func heal(amount):
 		health = 3
 	update_heart_display()
 	print("Đã hồi máu! Máu hiện tại: ", health)
-func boots_damage(bonus_dmg, duration):
-	damage += bonus_dmg
-	print("Sức mạng tăng cường! Damage: ", damage)
+
+func boots_damage(bonus_dmg, time_limit):
+	if not buff_timer.is_stopped():
+		_on_buff_timer_timeout()
+		
+	# 1. Cộng damage mới
+	current_bonus_damage = bonus_dmg
+	damage += current_bonus_damage
+	print("SỨC MẠNH TĂNG CƯỜNG! Damage: ", damage)
 	
-	var default_color = modulate
+	# 2. Đổi màu
 	modulate = Color(1, 0.5, 0.5) 
 	
-	await get_tree().create_timer(duration).timeout
+	# 3. Chạy Timer (Để hiện đồng hồ)
+	buff_timer.wait_time = time_limit
+	buff_timer.start()
+
+
+func _on_buff_timer_timeout() -> void:
+# 1. Trừ lại damage
+	damage -= current_bonus_damage
+	print("Hết thuốc! Damage về: ", damage)
 	
-	damage -= bonus_dmg
-	modulate = default_color
-	print("Hết Tác dụng Thuốc! Damage về: ", damage)
+	# 2. Reset biến
+	current_bonus_damage = 0
+	
+	# 3. Trả lại màu
+	modulate = Color(1, 1, 1)

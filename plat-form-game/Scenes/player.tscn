@@ -572,7 +572,7 @@ collision_layer = 2
 script = ExtResource("1_cvnsp")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(-9.536743e-07, -8.999999)
+position = Vector2(-5.684342e-14, -9)
 scale = Vector2(0.47750002, 0.5343751)
 sprite_frames = SubResource("SpriteFrames_x3wgy")
 animation = &"idle"
@@ -641,3 +641,22 @@ fill_mode = 4
 texture_under = SubResource("GradientTexture2D_3smsa")
 texture_over = ExtResource("5_fkybt")
 texture_progress = SubResource("GradientTexture2D_8erm5")
+
+[node name="Panel" type="Panel" parent="heart_bar"]
+offset_left = 144.0
+offset_top = 527.0
+offset_right = 356.0
+offset_bottom = 571.0
+
+[node name="BuffLabel" type="Label" parent="heart_bar/Panel"]
+layout_mode = 0
+offset_left = 17.0
+offset_top = 2.0
+offset_right = 186.0
+offset_bottom = 43.0
+theme_override_font_sizes/font_size = 21
+
+[node name="BuffTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="BuffTimer" to="." method="_on_buff_timer_timeout"]

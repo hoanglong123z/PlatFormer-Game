@@ -11,7 +11,7 @@ var is_taking_damage = false
 
 var player_in_attack_range = false  
 var can_attack = true              
-var attack_cooldown_time = 1.0
+var attack_cooldown_time = 0.5
 @onready var animated_sprite_2d: AnimatedSprite2D = $Flipper/AnimatedSprite2D
 @onready var kill_zone_col: CollisionPolygon2D = $Flipper/KillZone/CollisionPolygon2D
 @onready var flipper: Node2D = $Flipper
@@ -163,7 +163,7 @@ func _on_attack_area_body_exited(body: Node2D) -> void:
 	#if animated_sprite_2d.animation == "Attack":
 		#is_attacking = false
 		#kill_zone_col.disabled = true
-			#
+		
 		#await get_tree().create_timer(attack_cooldown_time).timeout
 		#can_attack = true
 
@@ -173,14 +173,13 @@ func attack():
 	
 	# 1. KHÓA NGAY LẬP TỨC
 	is_attacking = true
-	can_attack = false # <--- QUAN TRỌNG: Chặn không cho gọi hàm này lần nữa
+	can_attack = false # <--- Chặn không cho gọi hàm này lần nữa
 	velocity = Vector2.ZERO # Dừng quái lại
 	
 	# 2. CHƠI ANIMATION
 	animated_sprite_2d.play("Attack")
 	
-	# 3. CHỜ VUNG KIẾM (0.8 giây - Frame thứ 14/18)
-	# (Bro có thể chỉnh số này nhỏ hơn nếu muốn damage nảy sớm hơn)
+	# 3. CHỜ VUNG KIẾM 
 	await get_tree().create_timer(0.8).timeout
 	
 	# Check lại xem trong lúc chờ có bị đánh chết không
@@ -198,16 +197,14 @@ func attack():
 	# 6. TẮT SÁT THƯƠNG
 	kill_zone_col.disabled = true
 	
-	# 7. CHỜ ANIMATION DIỄN HẾT (QUAN TRỌNG ĐỂ KHÔNG BỊ TRƯỢT CHÂN)
-	# Code sẽ dừng ở đây cho đến khi animation Attack chạy xong frame cuối cùng
+	# 7. CHỜ ANIMATION DIỄN HẾT
 	if animated_sprite_2d.animation == "Attack":
 		await animated_sprite_2d.animation_finished
 	
 	# 8. MỞ KHÓA DI CHUYỂN
-	is_attacking = false # <--- Lúc này quái mới được phép đuổi theo tiếp
+	is_attacking = false 
 	
 	# 9. HỒI CHIÊU (Cooldown)
-	# Nghỉ 1 giây rồi mới được đánh cú tiếp theo
 	await get_tree().create_timer(attack_cooldown_time).timeout
 	
 	# 10. MỞ KHÓA ĐÁNH

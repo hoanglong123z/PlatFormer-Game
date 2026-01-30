@@ -1,0 +1,89 @@
+[gd_scene load_steps=14 format=3 uid="uid://bxeljuynsipov"]
+
+[ext_resource type="Script" uid="uid://bocppj7h73sc4" path="res://script/axe.gd" id="1_5sm5t"]
+[ext_resource type="Texture2D" uid="uid://b71i8aolgga6u" path="res://assets/Dungeon/Skeleton/Sword_sprite.png" id="2_aowxy"]
+[ext_resource type="PackedScene" uid="uid://dfbvlm4t6fxp7" path="res://Scenes/kill_zone.tscn" id="3_6o4l1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6o4l1"]
+atlas = ExtResource("2_aowxy")
+region = Rect2(0, 0, 92, 102)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2q7ty"]
+atlas = ExtResource("2_aowxy")
+region = Rect2(92, 0, 92, 102)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dd7ca"]
+atlas = ExtResource("2_aowxy")
+region = Rect2(184, 0, 92, 102)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rqofy"]
+atlas = ExtResource("2_aowxy")
+region = Rect2(276, 0, 92, 102)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s7ob3"]
+atlas = ExtResource("2_aowxy")
+region = Rect2(368, 0, 92, 102)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q6n35"]
+atlas = ExtResource("2_aowxy")
+region = Rect2(460, 0, 92, 102)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gllqp"]
+atlas = ExtResource("2_aowxy")
+region = Rect2(552, 0, 92, 102)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0ked7"]
+atlas = ExtResource("2_aowxy")
+region = Rect2(644, 0, 92, 102)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vasp8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6o4l1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2q7ty")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dd7ca")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rqofy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s7ob3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q6n35")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gllqp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0ked7")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6o4l1"]
+radius = 10.049875
+
+[node name="Axe" type="Area2D"]
+script = ExtResource("1_5sm5t")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-3.9999998, -5)
+scale = Vector2(0.70652175, 0.7352941)
+sprite_frames = SubResource("SpriteFrames_vasp8")
+frame_progress = 0.2841734
+
+[node name="KillZone" parent="." instance=ExtResource("3_6o4l1")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KillZone"]
+position = Vector2(-1, -3)
+shape = SubResource("CircleShape2D_6o4l1")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -112,8 +112,7 @@ theme_override_constants/shadow_offset_x = 6
 theme_override_constants/shadow_offset_y = 6
 theme_override_fonts/font = ExtResource("2_rfmqv")
 theme_override_font_sizes/font_size = 32
-text = "Chúc Mừng bạn chiến thắng màn chơi 
-        và mở khoá level 2"
+text = "Chúc Mừng bạn chiến thắng màn chơi "
 
 [node name="Label2" type="Label" parent="CanvasLayer"]
 anchors_preset = 8

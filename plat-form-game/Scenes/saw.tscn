@@ -1,0 +1,71 @@
+[gd_scene load_steps=12 format=3 uid="uid://dpj04beh6vpvd"]
+
+[ext_resource type="Texture2D" uid="uid://cadyw1ps26umt" path="res://assets/trap/trap_saw.png" id="1_4qbox"]
+[ext_resource type="Script" uid="uid://u1weq7gt3lod" path="res://script/saw.gd" id="1_mk2w8"]
+[ext_resource type="PackedScene" uid="uid://dfbvlm4t6fxp7" path="res://Scenes/kill_zone.tscn" id="2_mk2w8"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1kxu7"]
+atlas = ExtResource("1_4qbox")
+region = Rect2(76, 0, 76, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ngmcx"]
+atlas = ExtResource("1_4qbox")
+region = Rect2(76, 32, 76, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ijyew"]
+atlas = ExtResource("1_4qbox")
+region = Rect2(76, 64, 76, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1h6d2"]
+atlas = ExtResource("1_4qbox")
+region = Rect2(76, 96, 76, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n0gsv"]
+atlas = ExtResource("1_4qbox")
+region = Rect2(76, 128, 76, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c323r"]
+atlas = ExtResource("1_4qbox")
+region = Rect2(76, 160, 76, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rnbvy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1kxu7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ngmcx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ijyew")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1h6d2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n0gsv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c323r")
+}],
+"loop": true,
+"name": &"default",
+"speed": 8.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mk2w8"]
+radius = 13.038404
+
+[node name="saw" type="Area2D"]
+script = ExtResource("1_mk2w8")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_rnbvy")
+frame_progress = 0.7648179
+
+[node name="KillZone" parent="." instance=ExtResource("2_mk2w8")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KillZone"]
+position = Vector2(-17.485, -1)
+shape = SubResource("CircleShape2D_mk2w8")

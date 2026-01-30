@@ -1632,6 +1632,24 @@ position = Vector2(9352, -32)
 position = Vector2(11460.001, -721)
 scale = Vector2(1.335, 1.335)
 
+[node name="Skeleton8" parent="Enemys" instance=ExtResource("15_nb51f")]
+position = Vector2(8260, -33)
+
+[node name="Skeleton9" parent="Enemys" instance=ExtResource("15_nb51f")]
+position = Vector2(8291, -128)
+
+[node name="Skeleton10" parent="Enemys" instance=ExtResource("15_nb51f")]
+position = Vector2(5439, -16)
+
+[node name="Skeleton11" parent="Enemys" instance=ExtResource("15_nb51f")]
+position = Vector2(9242, -111)
+
+[node name="Skeleton12" parent="Enemys" instance=ExtResource("15_nb51f")]
+position = Vector2(9991, -63)
+
+[node name="Skeleton13" parent="Enemys" instance=ExtResource("15_nb51f")]
+position = Vector2(4999, -64)
+
 [node name="Labels" type="Node" parent="."]
 
 [node name="Label" type="Label" parent="Labels"]
@@ -1807,7 +1825,7 @@ position = Vector2(-1009, -559)
 position = Vector2(3823, -79)
 
 [node name="Point" parent="Portal/Tele3" index="2"]
-position = Vector2(578, 5)
+position = Vector2(507, 5)
 
 [node name="Tele4" parent="Portal" instance=ExtResource("14_nb51f")]
 z_index = 2
@@ -1889,15 +1907,6 @@ Thôi được rồi, nể tình ngươi còn sống sót, ta chỉ cho một co
 
 [node name="StartPoint" type="Marker2D" parent="."]
 position = Vector2(-184, 151)
-
-[node name="Skeleton" parent="." instance=ExtResource("15_nb51f")]
-position = Vector2(8260, -33)
-
-[node name="Skeleton2" parent="." instance=ExtResource("15_nb51f")]
-position = Vector2(8291, -128)
-
-[node name="Skeleton3" parent="." instance=ExtResource("15_nb51f")]
-position = Vector2(5439, -16)
 
 [connection signal="body_entered" from="KillZone/Area2D" to="KillZone/Area2D" method="_on_body_entered"]
 [connection signal="pressed" from="HUD/Pausegame" to="GameManager" method="_on_pausegame_pressed"]

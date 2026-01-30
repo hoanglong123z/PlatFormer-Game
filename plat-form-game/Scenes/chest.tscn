@@ -1,0 +1,136 @@
+[gd_scene load_steps=25 format=3 uid="uid://bcx8q37frc6sf"]
+
+[ext_resource type="Script" uid="uid://bcoxc743tk231" path="res://script/chest.gd" id="1_k15qg"]
+[ext_resource type="Texture2D" uid="uid://ch42qea7d2x2l" path="res://assets/Dungeon/mini_chest/mini_chest_1.png" id="1_uovm1"]
+[ext_resource type="PackedScene" uid="uid://bb88llxog7kxc" path="res://Scenes/coin.tscn" id="2_1puaa"]
+[ext_resource type="Texture2D" uid="uid://0ece2tepxsel" path="res://assets/Dungeon/mini_chest/mini_chest_2.png" id="2_mrmno"]
+[ext_resource type="Texture2D" uid="uid://dycpg4xh5l5u5" path="res://assets/Dungeon/mini_chest/mini_chest_3.png" id="3_k15qg"]
+[ext_resource type="Texture2D" uid="uid://r80esyfawi6r" path="res://assets/Dungeon/mini_chest/mini_chest_4.png" id="4_1puaa"]
+[ext_resource type="Texture2D" uid="uid://cq2mvcoao00v4" path="res://assets/Dungeon/mini_chest/mini_chest_open_1.png" id="5_ed36l"]
+[ext_resource type="Texture2D" uid="uid://dbx1lolte2cx3" path="res://assets/Dungeon/mini_chest/mini_chest_open_2.png" id="6_un233"]
+[ext_resource type="Texture2D" uid="uid://bxo0cq4wc0me" path="res://assets/Dungeon/mini_chest/mini_chest_open_3.png" id="7_a0i6c"]
+[ext_resource type="Texture2D" uid="uid://do7vn4gndngq5" path="res://assets/Dungeon/mini_chest/mini_chest_open_4.png" id="8_isy45"]
+[ext_resource type="FontFile" uid="uid://cjhq4j4qpje4d" path="res://assets/fonts/PixelOperator8-Bold.ttf" id="9_mrmno"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2jrwr"]
+atlas = ExtResource("1_uovm1")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_irijg"]
+atlas = ExtResource("2_mrmno")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kl3qt"]
+atlas = ExtResource("3_k15qg")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qhimo"]
+atlas = ExtResource("4_1puaa")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cqn7c"]
+atlas = ExtResource("5_ed36l")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tstbf"]
+atlas = ExtResource("6_un233")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3tipa"]
+atlas = ExtResource("7_a0i6c")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eqcoy"]
+atlas = ExtResource("8_isy45")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ndlnv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2jrwr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_irijg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kl3qt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qhimo")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cqn7c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tstbf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3tipa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eqcoy")
+}],
+"loop": false,
+"name": &"open",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uovm1"]
+size = Vector2(13, 12)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mrmno"]
+size = Vector2(24, 23)
+
+[sub_resource type="Gradient" id="Gradient_1puaa"]
+offsets = PackedFloat32Array(0.07333333, 0.22, 0.38666666, 0.6, 0.76, 0.88666666, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ed36l"]
+gradient = SubResource("Gradient_1puaa")
+fill = 1
+
+[node name="Chest" type="StaticBody2D"]
+collision_mask = 2
+script = ExtResource("1_k15qg")
+coin_scene = ExtResource("2_1puaa")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_ndlnv")
+animation = &"idle"
+frame_progress = 0.05387635
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_uovm1")
+
+[node name="InteractionArea" type="Area2D" parent="."]
+collision_layer = 3
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+shape = SubResource("RectangleShape2D_mrmno")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -32.0
+offset_top = -18.0
+offset_right = 34.0
+offset_bottom = -10.0
+theme_override_fonts/font = ExtResource("9_mrmno")
+theme_override_font_sizes/font_size = 8
+text = "Press \"E\""
+
+[node name="SpawnPoint" type="Marker2D" parent="."]
+position = Vector2(0, 4)
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(5.9604645e-08, 0.4999996)
+scale = Vector2(0.18749999, 0.183)
+texture = SubResource("GradientTexture2D_ed36l")
+
+[connection signal="body_entered" from="InteractionArea" to="." method="_on_interaction_area_body_entered"]
+[connection signal="body_exited" from="InteractionArea" to="." method="_on_interaction_area_body_exited"]

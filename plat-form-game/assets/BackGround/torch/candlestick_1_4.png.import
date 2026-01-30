@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ckmw77xkik2pm"
-path="res://.godot/imported/trap_plate.png-1c3bec6286dc599b34436692db90fbb5.ctex"
+uid="uid://btwyvnk3bwffu"
+path="res://.godot/imported/candlestick_1_4.png-fdbfa3c9f01058558a92bff428828ad1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/trap/trap_plate.png"
-dest_files=["res://.godot/imported/trap_plate.png-1c3bec6286dc599b34436692db90fbb5.ctex"]
+source_file="res://assets/BackGround/torch/candlestick_1_4.png"
+dest_files=["res://.godot/imported/candlestick_1_4.png-fdbfa3c9f01058558a92bff428828ad1.ctex"]
 
 [params]
 

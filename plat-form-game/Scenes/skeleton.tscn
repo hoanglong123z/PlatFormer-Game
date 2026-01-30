@@ -507,7 +507,7 @@ animations = [{
 size = Vector2(30, 30.5)
 
 [node name="Skeleton" type="CharacterBody2D"]
-collision_layer = 4
+collision_layer = 2
 script = ExtResource("1_vd5x3")
 health_item_scene = ExtResource("2_q1wii")
 damage_item_scene = ExtResource("3_lw4xn")
