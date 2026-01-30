@@ -8,6 +8,7 @@ extends StaticBody2D
 @onready var interaction_area: Area2D = $InteractionArea
 @onready var spawn_point: Marker2D = $SpawnPoint
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
+@onready var point_light_2d: PointLight2D = $PointLight2D
 
 var player_in_range = false
 var is_open = false
@@ -27,8 +28,9 @@ func _process(delta: float) -> void:
 func open_chest():
 	is_open = true
 	label.hide()
-	
 	collision_shape_2d.set_deferred("disabled", true)
+	var tween = create_tween()
+	tween.tween_property(point_light_2d, "energy", 0.0, 0.5)
 	animated_sprite_2d.play("open")
 	spawn_coins()
 
