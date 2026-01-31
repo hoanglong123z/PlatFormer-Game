@@ -28,11 +28,19 @@ var is_braking = false #phanh
 var is_tunring = false #quay đầu
 var last_direction = 0 #lưu biến cũ
 
+#Skill
+@export var skill_scene: PackedScene
+#@export var mana = 100
+@export var skill_cooldown = 20.0
+var can_cast_skill = true
+var skill_timer = 0.0
 #buff timer
 var current_bonus_damage = 0
 @onready var buff_timer: Timer = $BuffTimer
 @onready var buff_label: Label = $heart_bar/Panel/BuffLabel
 @onready var panel: Panel = $heart_bar/Panel
+@onready var skill_spawn_point: Marker2D = $SkillSpawnPoint
+@onready var skill_bar: TextureProgressBar = $heart_bar/SkillBar
 
 @onready var animated_sprite = $AnimatedSprite2D
 @onready var jump_sfx: AudioStreamPlayer2D = $JumpSFX
@@ -132,6 +140,22 @@ func _process(delta: float) -> void:
 			dash_timer = 0
 			print("Dash Đã Hồi")
 	
+	if skill_bar:
+		if can_cast_skill:
+			skill_bar.value = 100
+		else:
+			# Tính phần trăm hồi chiêu (từ 0 -> 100)
+			var percent = 100 - (skill_timer / skill_cooldown) * 100
+			skill_bar.value = percent
+	
+	# 2. Đếm ngược thời gian
+	if not can_cast_skill:
+		skill_timer -= delta
+		if skill_timer <= 0:
+			can_cast_skill = true
+			skill_timer = 0
+			print("Skill Đã Hồi!")
+	
 	if not buff_timer.is_stopped():
 		var time_left = int(buff_timer.time_left)
 		if panel:
@@ -176,6 +200,9 @@ func _physics_process(delta: float) -> void:
 		perform_attack()
 		return
 	
+	#Xử lý Skill
+	if Input.is_action_just_pressed("skill") and can_cast_skill and not is_attacking:
+		cast_skill()
 	#Xử lý Dash
 	if Input.is_action_just_pressed("Dash") and can_dash:
 		start_dash()
@@ -191,10 +218,11 @@ func _physics_process(delta: float) -> void:
 	if direction > 0:
 		animated_sprite.flip_h = false
 		attack_area.scale.x = 1
+		skill_spawn_point.position.x = abs(skill_spawn_point.position.x)
 	elif direction < 0:
 		animated_sprite.flip_h = true
 		attack_area.scale.x = -1
-
+		skill_spawn_point.position.x = -abs(skill_spawn_point.position.x)
 	#play animation
 	if not is_attacking:
 		if is_on_floor():
@@ -209,9 +237,48 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 	move_and_slide()
+
+func cast_skill():
+	if skill_scene == null:
+		print("Chưa kéo file Skill vào Player!")
+		return
 	
+	## 1. CHECK MANA TRƯỚC (Quan trọng)
+	#if mana < 10:
+		#print("Không đủ mana! Hiện có: ", mana)
+		#return # Nếu không đủ mana thì thoát luôn, không chạy animation
+
+	# 2. TRỪ MANA & KHÓA TRẠNG THÁI
+	#mana -= 10
+	#print("Đã dùng Skill. Mana còn: ", mana)
+	
+	can_cast_skill = false
+	skill_timer = skill_cooldown
+	is_attacking = true
+	animated_sprite.play("Attack")
+	
+	#await get_tree().create_timer(0).timeout 
+	
+	# 4. TẠO SKILL
+	var skill = skill_scene.instantiate()
+	
+	# Đặt vị trí vào đúng Marker2D bro đã tạo
+	skill.global_position = skill_spawn_point.global_position
+	
+	# Chỉnh hướng bay
+	if animated_sprite.flip_h:
+		skill.direction = Vector2.LEFT
+	else:
+		skill.direction = Vector2.RIGHT
+	
+	get_parent().add_child(skill) 
+	
+	# 5. CHỜ HẾT ANIMATION
+	await animated_sprite.animation_finished
+	is_attacking = false
+
 func perform_attack():
-	if is_attacking: 
+	if is_attacking:
 		return
 	is_attacking = true
 	animated_sprite.play("Attack")
@@ -220,7 +287,10 @@ func perform_attack():
 	var targets = []
 	targets.append_array(attack_area.get_overlapping_bodies())
 	targets.append_array(attack_area.get_overlapping_areas())
+	
 	for target in targets:
+		if target == self:
+			continue
 		if target.has_method("take_damage"):
 			target.take_damage(damage, global_position)
 			print("chém trúng: ", target.name)
@@ -235,7 +305,7 @@ func start_dash():
 	can_dash = false
 	dash_timer = DASH_COOLDOWN
 	is_dashing = true
-	set_collision_mask_value(2,false)
+	set_collision_mask_value(3,false)
 	animated_sprite.play("Dash")
 	var dash_direction = Input.get_axis("move_left", "move_right")
 	if dash_direction == 0:
@@ -305,12 +375,10 @@ func boots_damage(bonus_dmg, time_limit):
 
 
 func _on_buff_timer_timeout() -> void:
-# 1. Trừ lại damage
+#	1. Trừ lại damage
 	damage -= current_bonus_damage
 	print("Hết thuốc! Damage về: ", damage)
-	
 	# 2. Reset biến
 	current_bonus_damage = 0
-	
 	# 3. Trả lại màu
 	modulate = Color(1, 1, 1)

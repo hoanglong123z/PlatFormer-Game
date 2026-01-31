@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=3 uid="uid://bpklb1sofro1y"]
+
+[ext_resource type="Script" uid="uid://bstq7jsvhu8ih" path="res://script/skill.gd" id="1_86x3w"]
+[ext_resource type="Texture2D" uid="uid://bbkda3dhoimyw" path="res://assets/Art/Slash symmetrical.png" id="1_uc8rf"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_86x3w"]
+atlas = ExtResource("1_uc8rf")
+region = Rect2(0, 0, 312, 566)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lfkld"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_86x3w")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Skill" type="Area2D"]
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("1_86x3w")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-24.714, 0)
+scale = Vector2(0.05, 0.05)
+sprite_frames = SubResource("SpriteFrames_lfkld")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="."]
+position = Vector2(-24.714, 0)
+scale = Vector2(0.05, 0.05)
+polygon = PackedVector2Array(-150, -290, -111, -247, -68, -191, -37, -137, -16, -74, -7, -24, -6, 38, -26, 105, -57, 163, -91, 210, -139, 251, -174, 286, -130, 290, -7, 249, 102, 172, 163, 65, 180, -27, 159, -106, 97, -184, 27, -242, -43, -271, -117, -294)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(-24.714, 0)
+scale = Vector2(0.05, 0.05)
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

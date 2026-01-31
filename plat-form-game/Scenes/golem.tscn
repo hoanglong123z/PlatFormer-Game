@@ -235,6 +235,7 @@ size = Vector2(48, 52)
 
 [node name="Golem" type="CharacterBody2D"]
 collision_layer = 4
+collision_mask = 3
 script = ExtResource("1_bs7yq")
 rocket_scene = ExtResource("2_3yf8f")
 laser_scene = ExtResource("3_tspt6")

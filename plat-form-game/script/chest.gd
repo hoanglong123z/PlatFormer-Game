@@ -45,7 +45,7 @@ func spawn_coins():
 		coin.global_position = spawn_point.global_position
 		
 		var target_pos = coin.global_position
-		target_pos.x += randf_range(-60, 60)
+		target_pos.x += randf_range(-40, 40)
 		target_pos.y += randf_range(-15, 0)
 		
 		var jump_height = randf_range(-80, -120)

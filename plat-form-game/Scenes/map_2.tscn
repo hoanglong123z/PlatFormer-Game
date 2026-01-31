@@ -1,4 +1,4 @@
-[gd_scene load_steps=86 format=3 uid="uid://dop81gtuvcjrc"]
+[gd_scene load_steps=87 format=3 uid="uid://dop81gtuvcjrc"]
 
 [ext_resource type="Script" uid="uid://caipwbreosl01" path="res://script/map_2.gd" id="1_4bif2"]
 [ext_resource type="PackedScene" uid="uid://qd064cyi64ad" path="res://Scenes/player.tscn" id="2_4rrbq"]
@@ -23,6 +23,7 @@
 [ext_resource type="PackedScene" uid="uid://cw8pq13sq3116" path="res://Scenes/portal_finished.tscn" id="21_ofy8c"]
 [ext_resource type="PackedScene" uid="uid://bb88llxog7kxc" path="res://Scenes/coin.tscn" id="22_d07pq"]
 [ext_resource type="PackedScene" uid="uid://bcx8q37frc6sf" path="res://Scenes/chest.tscn" id="23_eeyhr"]
+[ext_resource type="PackedScene" uid="uid://dfcjxk8qq31vg" path="res://Scenes/npc.tscn" id="24_r5uay"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qmr3o"]
 texture = ExtResource("3_uuwls")
@@ -1019,6 +1020,13 @@ position = Vector2(2469, 347)
 position = Vector2(1643, 355)
 scale = Vector2(0.5, 0.5)
 
+[node name="SkeletonAxe4" parent="Enemy" instance=ExtResource("17_8ayri")]
+position = Vector2(1742, 147)
+scale = Vector2(0.5, 0.5)
+
+[node name="Goblin3" parent="Enemy" instance=ExtResource("20_ofkmh")]
+position = Vector2(749, -132)
+
 [node name="Trap" type="Node" parent="."]
 
 [node name="trap1" parent="Trap" instance=ExtResource("15_f64o1")]
@@ -1353,6 +1361,26 @@ position = Vector2(3686, 279)
 
 [node name="Coin75" parent="coins" instance=ExtResource("22_d07pq")]
 position = Vector2(3801, 291)
+
+[node name="NPCStory" type="Node" parent="."]
+
+[node name="NPC" parent="NPCStory" instance=ExtResource("24_r5uay")]
+position = Vector2(-1621, 368)
+mockery_text = "Lại thêm một kẻ chán sống mò xuống đây à? Ta cá là cậu không sống nổi qua 5 phút đâu. Nhìn cái mặt ngơ ngác đó là biết"
+dialogue_text = "Cậu... cậu từ trên mặt đất xuống sao? Quay lại đi! Đây là Hầm Ngục Bóng Tối, nơi ánh sáng mặt trời đã bị lãng quên hàng thế kỷ. Nghe nói lũ Goblin đã đánh thức những thứ không nên đánh thức ở dưới sâu..."
+
+[node name="NPC2" parent="NPCStory" instance=ExtResource("24_r5uay")]
+position = Vector2(1420, 320)
+mockery_text = "Nhìn bộ dạng cậu kìa, chắc chưa từng thấy ma bao giờ hả? Cẩn thận không lại thành bạn cùng phòng giam vĩnh viễn với ta đấy.g"
+dialogue_text = "Suỵt! Khẽ thôi... Những kẻ nằm xuống ở đây không được yên nghỉ đâu. Lũ Bộ Xương (Skeleton) đó... chúng ghen tị với hơi ấm của người sống. Và cẩn thận bước chân, những cái bẫy cổ xưa ở đây nhạy lắm đấy!"
+
+[node name="NPC3" parent="NPCStory" instance=ExtResource("24_r5uay")]
+position = Vector2(3953, 368)
+required_coins = 50
+is_gatekeeper = true
+mockery_text = "Cậu định đi tiếp với cái túi rỗng tuếch đó à? Quay lại tìm thêm vàng đi! Thế giới bên kia cánh cổng này đắt đỏ lắm, không dành cho kẻ nghèo đâu."
+success_text = "Được rồi, dũng khí của cậu khá đấyq! Bước vào đi, và đừng để bóng đêm nuốt chửng linh hồn cậu. Chúc may mắn ở vùng đất tiếp theo!"
+dialogue_text = "Không thể tin được... Một người sống sót bước ra từ bóng tối sao? Ta cứ tưởng lũ Skeleton đã biến cậu thành 'bạn cùng phòng' với chúng rồi chứ. Cánh cổng phía sau ta dẫn tới tầng sâu tiếp theo... nơi mà đến cả ánh sáng cũng không dám bén mảng tới."
 
 [node name="StartPoint" type="Marker2D" parent="."]
 position = Vector2(-1795, 355)

@@ -1,6 +1,7 @@
-[gd_scene load_steps=90 format=3 uid="uid://qd064cyi64ad"]
+[gd_scene load_steps=96 format=3 uid="uid://qd064cyi64ad"]
 
 [ext_resource type="Script" uid="uid://d1sfbct2jif1c" path="res://script/player.gd" id="1_cvnsp"]
+[ext_resource type="PackedScene" uid="uid://bpklb1sofro1y" path="res://Scenes/skill.tscn" id="2_7dp3o"]
 [ext_resource type="Texture2D" uid="uid://b8twbi613t1hc" path="res://assets/Art/male_hero-combo_1.png" id="2_ukyrk"]
 [ext_resource type="Texture2D" uid="uid://c0176x7ejg33l" path="res://assets/Art/male_hero-idle.png" id="3_3smsa"]
 [ext_resource type="PackedScene" uid="uid://ssg5iebsp1bc" path="res://Scenes/jump_sfx.tscn" id="3_6t5aa"]
@@ -13,6 +14,7 @@
 [ext_resource type="Shader" uid="uid://b73ew2viebkqv" path="res://shader/player.gdshader" id="5_x3wgy"]
 [ext_resource type="Texture2D" uid="uid://bxv5trysacjrv" path="res://assets/Art/male_hero-jump.png" id="7_pu2lt"]
 [ext_resource type="Texture2D" uid="uid://c3crgy8hpqr02" path="res://assets/Art/male_hero-run.png" id="8_ukyrk"]
+[ext_resource type="Texture2D" uid="uid://bbkda3dhoimyw" path="res://assets/Art/Slash symmetrical.png" id="15_h4iuc"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_igrcy"]
 atlas = ExtResource("2_ukyrk")
@@ -566,10 +568,27 @@ gradient = SubResource("Gradient_3smsa")
 width = 32
 height = 32
 
+[sub_resource type="Gradient" id="Gradient_fd4e3"]
+colors = PackedColorArray(0.34509805, 0.34509805, 0.34509805, 1, 0.2784314, 0.2784314, 0.2784314, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_qqcod"]
+gradient = SubResource("Gradient_fd4e3")
+width = 353
+height = 584
+
+[sub_resource type="Gradient" id="Gradient_h4iuc"]
+colors = PackedColorArray(0.25882354, 0.85882354, 1, 1, 0.25882354, 0.85882354, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_fd4e3"]
+gradient = SubResource("Gradient_h4iuc")
+width = 353
+height = 584
+
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 z_index = 5
 collision_layer = 2
 script = ExtResource("1_cvnsp")
+skill_scene = ExtResource("2_7dp3o")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-5.684342e-14, -9)
@@ -643,10 +662,10 @@ texture_over = ExtResource("5_fkybt")
 texture_progress = SubResource("GradientTexture2D_8erm5")
 
 [node name="Panel" type="Panel" parent="heart_bar"]
-offset_left = 144.0
-offset_top = 527.0
-offset_right = 356.0
-offset_bottom = 571.0
+offset_left = 269.0
+offset_top = 526.0
+offset_right = 481.0
+offset_bottom = 570.0
 
 [node name="BuffLabel" type="Label" parent="heart_bar/Panel"]
 layout_mode = 0
@@ -656,7 +675,21 @@ offset_right = 186.0
 offset_bottom = 43.0
 theme_override_font_sizes/font_size = 21
 
+[node name="SkillBar" type="TextureProgressBar" parent="heart_bar"]
+offset_left = 174.0
+offset_top = 520.0
+offset_right = 527.0
+offset_bottom = 1104.0
+scale = Vector2(0.15, 0.15)
+fill_mode = 2
+texture_under = SubResource("GradientTexture2D_qqcod")
+texture_over = ExtResource("15_h4iuc")
+texture_progress = SubResource("GradientTexture2D_fd4e3")
+
 [node name="BuffTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="SkillSpawnPoint" type="Marker2D" parent="."]
+position = Vector2(13, -10)
 
 [connection signal="timeout" from="BuffTimer" to="." method="_on_buff_timer_timeout"]
