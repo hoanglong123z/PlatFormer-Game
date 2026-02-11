@@ -25,12 +25,12 @@ func _on_back_pressed() -> void:
 func _on_lv_1_pressed() -> void:
 	GameManager.delete_save() 
 	print("Đã bấm nút Level 1")
-	GameManager.reset_game_data()
+	GameManager.reset_game_state()
 	get_tree().change_scene_to_file("res://Scenes/game.tscn")
 	
 
 func _on_lv_2_pressed() -> void:
 	GameManager.delete_save()
 	print("Vào Level 2")
-	GameManager.reset_game_data()
+	GameManager.reset_game_state()
 	get_tree().change_scene_to_file("res://Scenes/map_2.tscn")

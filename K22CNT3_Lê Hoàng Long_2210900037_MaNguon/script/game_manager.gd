@@ -4,33 +4,46 @@ const SAVE_PATH = "user://savegame.save"
 
 var highest_unlocked_level = 1
 var golem_defeated = false
+
 # --- DỮ LIỆU GAME ---
 var score = 0
-var dead_objects = [] # Danh sách ID của Coin/Quái đã chết và ĐÃ ĐƯỢC LƯU
-var player_data = {}  # Biến tạm để chứa dữ liệu khi load
+var dead_objects = [] # Danh sách ID đã chết
+var player_data = {}  # Biến tạm load game
 
+# Biến lưu tọa độ hồi sinh (Checkpoint)
+var respawn_position = Vector2.ZERO 
+var start_position = Vector2.ZERO
+# UI References (Lưu ý: Nếu GameManager là Autoload, đảm bảo các node này có trong scene Autoload hoặc xử lý cẩn thận)
 @onready var score_label = %ScoreLabel
 @onready var pause: Control = %Pause
 @onready var pausegame: Button = %Pausegame
 
-
-var respawn_position = Vector2.ZERO
-var start_position = Vector2(-182,151)
 signal score_updated
 
-# === HÀM HỖ TRỢ COIN/QUÁI ===
-# Kiểm tra xem vật thể này đã "lên bảng đếm số" trong file save chưa
+# === 1. HÀM QUAN TRỌNG NHẤT: RESET GAME ===
+# Gọi hàm này khi bấm "New Game" hoặc "Vào Màn 1" từ Menu
+func reset_game_state():
+	print(">>> ĐANG RESET GAME STATE...")
+	score = 0 
+	dead_objects = [] 
+	player_data = {}
+	
+	# QUAN TRỌNG: Đưa về 0 để Player tự tìm StartPoint ở màn mới
+	respawn_position = Vector2.ZERO 
+	
+	# Reset trạng thái các biến khác nếu cần (ví dụ giữ nguyên level đã mở khóa)
+	# golem_defeated = false 
+
+# === 2. HỆ THỐNG COIN/QUÁI ===
 func is_object_dead(node_path: String) -> bool:
 	return node_path in dead_objects
 
-# Đăng ký cái chết (Gọi khi ăn coin hoặc giết quái)
 func register_death(node_path: String):
 	if node_path not in dead_objects:
 		dead_objects.append(node_path)
 
-# === HỆ THỐNG SAVE / LOAD ===
+# === 3. HỆ THỐNG SAVE / LOAD ===
 func save_game():
-	# Lấy Player thực tế đang chơi để lưu vị trí
 	var player = get_tree().get_first_node_in_group("Player")
 	if player == null:
 		print("Không tìm thấy Player để lưu!")
@@ -40,36 +53,39 @@ func save_game():
 	var data = {
 		"score": score,
 		"scene": get_tree().current_scene.scene_file_path,
-		"position": respawn_position,
+		"position": respawn_position, # Lưu vị trí checkpoint hiện tại
 		"health": player.health,
 		"dead_objects": dead_objects,
 		"highest_unlocked_level": highest_unlocked_level,
 		"golem_defeated": golem_defeated
 	}
 	file.store_var(data)
-	print(">>> GAME SAVED! Vị trí: ", respawn_position)
-	print(">>> Đã lưu ", dead_objects.size(), " vật thể đã chết.")
-	print(">>> GAME SAVED! Level mở khóa cao nhất: ", highest_unlocked_level)
+	print(">>> GAME SAVED! Checkpoint: ", respawn_position)
 
 func load_game():
 	if not FileAccess.file_exists(SAVE_PATH):
+		print("Không tìm thấy file save!")
 		return
 	
 	var file = FileAccess.open(SAVE_PATH, FileAccess.READ)
 	var data = file.get_var()
 	
-	# [QUAN TRỌNG] Reset RAM và nạp lại từ File
-	# Việc này đảm bảo những vật thể "chưa kịp save" sẽ được hồi sinh
+	# Nạp dữ liệu vào RAM
 	dead_objects = data.get("dead_objects", [])
 	score = data.get("score", 0)
 	highest_unlocked_level = data.get("highest_unlocked_level", 1)
 	golem_defeated = data.get("golem_defeated", false)
-	player_data = data # Lưu tạm để Player dùng khi _ready
+	
+	# Lưu tạm dữ liệu Player để script Player tự lấy khi _ready
+	player_data = data 
 	
 	# Chuyển cảnh
-	get_tree().paused = false # Bỏ pause nếu đang pause
-	get_tree().change_scene_to_file(data["scene"])
-	print(">>> LOAD GAME! Level mở khóa: ", highest_unlocked_level)
+	get_tree().paused = false 
+	if data.has("scene"):
+		get_tree().change_scene_to_file(data["scene"])
+		print(">>> LOAD GAME THÀNH CÔNG!")
+	else:
+		print("File save bị lỗi: Không có thông tin Scene")
 
 func has_save_file() -> bool:
 	return FileAccess.file_exists(SAVE_PATH)
@@ -77,14 +93,9 @@ func has_save_file() -> bool:
 func delete_save():
 	if FileAccess.file_exists(SAVE_PATH):
 		DirAccess.remove_absolute(SAVE_PATH)
-	# Reset dữ liệu RAM
-	score = 0
-	dead_objects = []
-	player_data = {}
-	respawn_position = start_position
+	reset_game_state() # Xóa luôn dữ liệu trong RAM
 
-func _ready() -> void:
-	pass
+# === 4. CÁC HÀM HỖ TRỢ KHÁC ===
 func add_point():
 	score += 1
 	if score_label:
@@ -95,28 +106,31 @@ func unlock_level(level_index):
 	if level_index > highest_unlocked_level:
 		highest_unlocked_level = level_index
 		print("Chúc mừng! Đã mở khoá level ", level_index)
-		save_game()
+		save_game() # Lưu game ngay khi mở khóa màn mới
 
+# Xử lý nút Pause (Chỉnh lại logic chuẩn Godot)
 func _on_pausegame_pressed() -> void:
-	if get_tree().paused:
-		pause.resume()
-		pausegame.visible = true
-	else:
-		pause.pause()
-		pausegame.visible = false
+	var is_paused = get_tree().paused
+	get_tree().paused = not is_paused # Đảo ngược trạng thái
+	
+	if pause:
+		pause.visible = not is_paused # Nếu đang pause thì hiện menu
+	if pausegame:
+		pausegame.visible = is_paused # Nếu đang pause thì ẩn nút pause
 
-func reset_game_data():
-	print("--- ĐANG RESET DỮ LIỆU ---")
-	score = 0 
-	dead_objects = []
-	respawn_position = start_position
-	CheckPoint.last_position = null
-	golem_defeated = false
+# Các hàm Getter/Setter cho Player dùng
+func has_loaded_data() -> bool: 
+	return not player_data.is_empty()
 
-func reset_checkpoint():
-	respawn_position = Vector2.ZERO
+func get_loaded_position() -> Vector2: 
+	if player_data.has("position"):
+		return player_data["position"]
+	return Vector2.ZERO
 
-func has_loaded_data() -> bool: return not player_data.is_empty()
-func get_loaded_position() -> Vector2: return player_data["position"]
-func get_loaded_health() -> int: return player_data["health"]
-func clear_loaded_data(): player_data = {}
+func get_loaded_health() -> int: 
+	if player_data.has("health"):
+		return player_data["health"]
+	return 3
+
+func clear_loaded_data(): 
+	player_data = {}
