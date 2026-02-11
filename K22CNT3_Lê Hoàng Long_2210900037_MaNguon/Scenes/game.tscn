@@ -1495,18 +1495,9 @@ position = Vector2(10098, -87)
 [node name="Coin160" parent="Coins" instance=ExtResource("4_3dryh")]
 position = Vector2(10110, -87)
 
-[node name="Chest" parent="Coins" instance=ExtResource("28_tgy6u")]
-position = Vector2(1449, -598)
-
 [node name="Chest2" parent="Coins" instance=ExtResource("28_tgy6u")]
 position = Vector2(-744, -520)
 scale = Vector2(1.35, 1.35)
-
-[node name="Chest3" parent="Coins" instance=ExtResource("28_tgy6u")]
-position = Vector2(12014, -767)
-
-[node name="Chest4" parent="Coins" instance=ExtResource("28_tgy6u")]
-position = Vector2(11016, -55)
 
 [node name="Platforms" type="Node" parent="."]
 
@@ -1667,18 +1658,19 @@ position = Vector2(4999, -64)
 [node name="Labels" type="Node" parent="."]
 
 [node name="Label" type="Label" parent="Labels"]
-offset_left = -99.0
-offset_top = -20.0
-offset_right = -13.0
-offset_bottom = 32.0
-theme_override_colors/font_color = Color(0.103167854, 0.18806413, 0.47255045, 1)
+offset_left = -171.0
+offset_top = 52.0
+offset_right = -85.0
+offset_bottom = 104.0
+theme_override_colors/font_color = Color(0.8671827, 0.90447617, 0.98876995, 1)
 theme_override_fonts/font = ExtResource("7_1l0tm")
 theme_override_font_sizes/font_size = 8
 text = "Space to jump
 <- / A 
 -> / D 
-Z to Dash
-X to Attack"
+Z/J to Dash
+X/K to Attack
+C/L to Skill"
 metadata/_edit_use_anchors_ = true
 
 [node name="Label3" type="Label" parent="Labels"]

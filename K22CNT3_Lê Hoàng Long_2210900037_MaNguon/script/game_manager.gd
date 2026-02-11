@@ -113,6 +113,8 @@ func reset_game_data():
 	CheckPoint.last_position = null
 	golem_defeated = false
 
+func reset_checkpoint():
+	respawn_position = Vector2.ZERO
 
 func has_loaded_data() -> bool: return not player_data.is_empty()
 func get_loaded_position() -> Vector2: return player_data["position"]
